@@ -1,0 +1,106 @@
+swagger: '2.0'
+info:
+  description: 'The base URL for all API endpoints is https://api.rekki.com/api
+
+
+    Api key value consists of word Bearer together with api key that you can get from integrations@rekki.com
+
+    '
+  title: Rekki.com Supplier catalog general API
+  contact:
+    email: integrations@rekki.com
+  license:
+    name: All rights reserved
+  version: ''
+host: api.rekki.com
+basePath: /api
+schemes:
+- https
+tags:
+- name: general
+paths:
+  /integration/v1/log:
+    post:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - general
+      summary: Post a log message for the supplier for internal debugging. There is no need to handle response from this endpoint
+      operationId: PostLogMessage
+      deprecated: true
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.LogMessage'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+  /integration/v3/log:
+    post:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - general
+      summary: Post a log message for the supplier for internal debugging. There is no need to handle response from this endpoint
+      operationId: PostLogMessageV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.LogMessage'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+definitions:
+  v3.LogMessage:
+    type: object
+    properties:
+      level:
+        description: 'possible values are: "panic", "error", "fatal", "warn", "warning", "info", "debug", "trace"'
+        type: string
+      message:
+        type: string
+  main.LogMessage:
+    type: object
+    properties:
+      level:
+        description: 'possible values are: "panic", "error", "fatal", "warn", "warning", "info", "debug", "trace"'
+        type: string
+      message:
+        type: string
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    name: Authorization
+    in: header

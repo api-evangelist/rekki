@@ -1,0 +1,217 @@
+swagger: '2.0'
+info:
+  description: 'The base URL for all API endpoints is https://api.rekki.com/api
+
+
+    Api key value consists of word Bearer together with api key that you can get from integrations@rekki.com
+
+    '
+  title: Rekki.com Supplier catalog order-guide API
+  contact:
+    email: integrations@rekki.com
+  license:
+    name: All rights reserved
+  version: ''
+host: api.rekki.com
+basePath: /api
+schemes:
+- https
+tags:
+- name: order-guide
+paths:
+  /integration/v3/order-guide:
+    get:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - order-guide
+      summary: Retrieve customer's order guide
+      operationId: GetOrderGuideV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - type: string
+        description: Customer account number
+        name: CustomerAccountNumber
+        in: query
+        required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.OrderGuideResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+    post:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - order-guide
+      summary: Replace customer's order guide
+      operationId: ReplaceOrderGuideV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Parameters
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.OrderGuideRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.OrderGuideResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+definitions:
+  v3.OrderGuideParameters:
+    type: object
+    required:
+    - name
+    - reference
+    - units
+    properties:
+      reference:
+        description: product code for the item that maps to the supplier’s catalog.
+        type: string
+        x-order: '0'
+        example: BLBP
+      name:
+        description: item name as would be defined on the customer’s product list.
+        type: string
+        x-order: '1'
+        example: Blueberries
+      units:
+        description: a unit that the item can be ordered in.
+        type: string
+        x-order: '2'
+        example: Pint
+      price:
+        description: the order price in cents for the item per unit.
+        type: string
+        x-order: '3'
+        example: '299'
+      archived:
+        description: 'status of an item in the order-guide.
+
+          If False meaning the item is currently visible to the customer,
+
+          by setting it True the item can temporarily be made unavailable.'
+        type: boolean
+        x-order: '4'
+        example: false
+  v3.OrderGuideResponse:
+    type: object
+    properties:
+      customer_account_number:
+        type: string
+        example: REKK1
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/v3.OrderGuideObject'
+  v3.OrderGuideObject:
+    type: object
+    required:
+    - name
+    - reference
+    - units
+    properties:
+      reference:
+        description: product code for the item that maps to the supplier’s catalog.
+        type: string
+        x-order: '0'
+        example: BLBP
+      name:
+        description: item name as would be defined on the customer’s product list.
+        type: string
+        x-order: '1'
+        example: Blueberries
+      units:
+        description: a unit that the item can be ordered in.
+        type: string
+        x-order: '2'
+        example: Pint
+      price:
+        description: the order price in cents for the item per unit.
+        type: string
+        x-order: '3'
+        example: '299'
+      archived:
+        description: 'status of an item in the order-guide.
+
+          If False meaning the item is currently visible to the customer,
+
+          by setting it True the item can temporarily be made unavailable.'
+        type: boolean
+        x-order: '4'
+        example: false
+      deleted:
+        description: status of an item in the order-guide. If True means the item has been deleted from the order-guide
+        type: boolean
+        x-order: '5'
+        example: false
+  v3.OrderGuideRequest:
+    type: object
+    required:
+    - customer_account_number
+    - products
+    properties:
+      customer_account_number:
+        description: the customer the order-guide belongs to
+        type: string
+        example: REKK1
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/v3.OrderGuideParameters'
+  v3.GenericErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    name: Authorization
+    in: header

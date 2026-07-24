@@ -1,0 +1,281 @@
+swagger: '2.0'
+info:
+  description: 'The base URL for all API endpoints is https://api.rekki.com/api
+
+
+    Api key value consists of word Bearer together with api key that you can get from integrations@rekki.com
+
+    '
+  title: Rekki.com Supplier catalog connect_customers API
+  contact:
+    email: integrations@rekki.com
+  license:
+    name: All rights reserved
+  version: ''
+host: api.rekki.com
+basePath: /api
+schemes:
+- https
+tags:
+- name: connect_customers
+paths:
+  /integration/v3/customers-and-product-list/connect:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: 'Creates new customers or updates existing ones on your REKKI Connect customer list.
+
+
+        **NOTE**: **the processing stops at first error**
+
+
+        ### About product lists
+
+        **IMPORTANT**: Customers'' product lists will be completely replaced by the lists you upload even if they are empty, in which case the product list for the given customer will be emptied.
+
+
+        If you want to update just the customer data without touching the product list, use `/integration/v3/customers/connect` instead.
+
+
+        In effect, the product list update behaviour is equivalent to this:
+
+        - Product matching is done via code and unit.
+
+        - New products in the upload will be added to the customer''s product list.
+
+        - Items in the upload that already exist in the customer''s product list will have name and size updated, if there are changes.
+
+        - Items that already exist in the customer''s product list but are not in the upload will be removed.
+
+
+
+        ### About contacts
+
+        NOTE: If you add contacts, the name is required as well as at least one of phone
+
+        or email address.
+
+
+        Status:` 200 OK`
+
+        Body: `{ "status": "success"}`
+
+
+        Status: `500 `
+
+        Body: `{ "status": "error", "error":"input validation failed: ..."}`
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - connect_customers
+      summary: Creates or Updates customers and their product lists on REKKI Connect.
+      operationId: CreateConnectCustomersAndProductListV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.CreateConnectCustomersAndOrderGuideInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.CreateConnectCustomersOutput'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/customers/connect:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: 'Create a new customer or update an existing one on your REKKI Connect customer list.
+
+
+        NOTE: If you add contacts, the name is required as well as at least one of phone
+
+        or email address.
+
+
+        Status:` 200 OK`
+
+        Body: `{ "status": "success"}`
+
+
+        Status: `500 `
+
+        Body: `{ "status": "error", "error":"input validation failed: ..."}`
+
+
+        **the processing stops at first error**
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - connect_customers
+      summary: Creates or Updates customers on REKKI Connect.
+      operationId: CreateConnectCustomersV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.CreateConnectCustomersInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.CreateConnectCustomersOutput'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+definitions:
+  v3.CreateConnectCustomersOutput:
+    type: object
+    properties:
+      error:
+        type: string
+      num_customers_created:
+        type: integer
+      status:
+        type: string
+  v3.ConnectCustomerItem:
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      size:
+        type: string
+        maxLength: 255
+      unit:
+        type: string
+      spec:
+        type: string
+  v3.CreateConnectCustomersAndOrderGuideInput:
+    type: object
+    required:
+    - customers
+    properties:
+      customers:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/definitions/v3.ConnectCustomerAndOrderGuideInput'
+  v3.CreateConnectCustomersInput:
+    type: object
+    required:
+    - customers
+    properties:
+      customers:
+        type: array
+        items:
+          $ref: '#/definitions/v3.ConnectCustomerInput'
+  v3.ConnectCustomerInput:
+    type: object
+    required:
+    - account_number
+    - delivery_address
+    - name
+    properties:
+      account_number:
+        type: string
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/v3.ConnectCustomerContactInput'
+      delivery_address:
+        type: string
+      delivery_instructions:
+        type: string
+      name:
+        type: string
+      order_confirmation_email:
+        type: string
+  v3.ConnectCustomerAndOrderGuideInput:
+    type: object
+    required:
+    - account_number
+    - delivery_address
+    - name
+    properties:
+      account_number:
+        type: string
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/v3.ConnectCustomerContactInput'
+      delivery_address:
+        type: string
+      delivery_instructions:
+        type: string
+      name:
+        type: string
+      order_confirmation_email:
+        type: string
+      product_list:
+        type: array
+        items:
+          $ref: '#/definitions/v3.ConnectCustomerItem'
+  v3.GenericErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+  v3.ConnectCustomerContactInput:
+    type: object
+    required:
+    - name
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    name: Authorization
+    in: header

@@ -1,0 +1,1165 @@
+swagger: '2.0'
+info:
+  description: 'The base URL for all API endpoints is https://api.rekki.com/api
+
+
+    Api key value consists of word Bearer together with api key that you can get from integrations@rekki.com
+
+    '
+  title: Rekki.com Supplier catalog API
+  contact:
+    email: integrations@rekki.com
+  license:
+    name: All rights reserved
+  version: ''
+host: api.rekki.com
+basePath: /api
+schemes:
+- https
+tags:
+- name: catalog
+paths:
+  /integration/v1/catalog/items:
+    get:
+      security:
+      - ApiKeyAuth: []
+      description: 'Lists all your catalog items. Sorted by creation date, with the oldest appearing first.
+
+        No input parameters. Options for pagination and sorting direction may be introduced later.
+
+        Response is a JSON object with a data property that contains catalog items of the authenticated supplier.'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Get catalog items for authenticated supplier
+      operationId: GetCatalogItems
+      deprecated: true
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/main.CatalogItems'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n"
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Creates or Updates an item on your catalog. If item with this product_code already exists, you can update this item. Item is looked up by product code
+      operationId: UpdateCatalogItem
+      deprecated: true
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.APISupplierCatalogItem'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/main.APISupplierCatalogItem'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v1/catalog/items/{id}:
+    get:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Lists all orders placed for the supplier that were placed through REKKI.
+      operationId: GetCatalogItem
+      deprecated: true
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - type: string
+        description: ID of the item to retrieve. Item IDs are discoverable when listing items.
+        name: id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/main.APISupplierCatalogItem'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.GenericErrorResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+    delete:
+      security:
+      - ApiKeyAuth: []
+      description: Delete an item from your catalog by its unique ID.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Delete an item from catalog
+      operationId: DeleteCatalogItem
+      deprecated: true
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - type: string
+        description: ID of the item to retrieve. Item IDs are discoverable when listing items.
+        name: id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/main.SuccessConfirmation'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v1/catalog/replace:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n"
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Drop all existing items from the catalog and upload new ones
+      operationId: ReplaceCatalog
+      deprecated: true
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.ReplaceCatalogInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/main.SuccessConfirmation'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v2/catalog/items/availability:
+    post:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Update availability status for one of the items in the catalog
+      operationId: UpdateCatalogItemAvailability
+      deprecated: true
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.SetStockStatusInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/main.UpdateSuccess'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/inventory:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: '### This API endpoint allows to update stock availability for products in the catalog.
+
+
+        By associating customer accounts with specific inventory locations, suppliers restrict customers to view products that are only available in the stock at the given location.
+
+
+        Provided stock availability details will override previous values for the specified customer accounts.
+
+        Additionally, if a customer account number that was previously associated with the given inventory location but is omitted from the `customer_account_numbers` list, this account will be unlinked from the inventory location.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Update catalog stock availability for the supplier
+      operationId: UpdateCatalogInventory
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.UpdateCatalogInventoryInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.UpdateInventoryCatalogOutput'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/items:
+    get:
+      security:
+      - ApiKeyAuth: []
+      description: 'Lists all your catalog items. Sorted by creation date, with the oldest appearing first.
+
+        No input parameters. Options for pagination and sorting direction may be introduced later.
+
+        Response is a JSON object with a data property that contains catalog items of the authenticated supplier.'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Get catalog items for authenticated supplier
+      operationId: GetCatalogItemsV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.CatalogItems'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n"
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Creates or Updates multiple items on your catalog. If item with this product_code already exists, you can update this item. Item is looked up by product code
+      operationId: UpdateCatalogItemsV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.UpdateCatalogInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.CatalogItems'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/items/availability:
+    post:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Update availability status for one of the items in the catalog
+      operationId: UpdateCatalogItemAvailabilityV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.SetStockStatusInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.UpdateSuccess'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.AvailabilityErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/items/delete:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: Delete items from the catalog by its unique IDs.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Delete items from catalog
+      operationId: DeleteCatalogItemsV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.DeleteCatalogItemsInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.SuccessConfirmation'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/items/photo:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: Upload a photo for an item in the supplier catalog
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      tags:
+      - catalog
+      operationId: UploadCatalogPhoto
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - type: string
+        description: Product code of the item
+        name: product_code
+        in: query
+        required: true
+      - type: string
+        description: Unit of the item
+        name: product_unit
+        in: query
+        required: true
+      - type: string
+        description: Comma separated list of tags for the photo
+        name: tags
+        in: query
+      - type: file
+        description: Image file
+        name: file
+        in: formData
+        required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.UploadCatalogPhotoResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/items/{id}:
+    get:
+      security:
+      - ApiKeyAuth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Fetch a specific catalog item by its Id.
+      operationId: GetCatalogItemV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - type: string
+        description: ID of the item to retrieve. Item IDs are discoverable when listing items.
+        name: id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.APISupplierCatalogItem'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/pricelist:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: '### This API endpoint allows to update price lists for customers.
+
+
+        Customer accounts can be linked to specific price lists, enabling products to be viewed and purchased at corresponding prices.
+
+
+        Provided price list details will override previous values for the specified customer accounts.
+
+        Additionally, if a customer account number that was previously associated with the given price list is omitted from the `customer_account_numbers` list, this account will be unlinked from the price list.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Update the price list for the supplier
+      operationId: UpdatePriceList
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/v3.UpdatePriceListInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/v3.UpdatePriceListOutput'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+  /integration/v3/catalog/replace:
+    post:
+      security:
+      - ApiKeyAuth: []
+      description: "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n"
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - catalog
+      summary: Drop all existing items from the catalog and upload new ones
+      operationId: ReplaceCatalogV3
+      parameters:
+      - enum:
+        - supplier_api_token
+        type: string
+        description: Required header
+        name: X-REKKI-Authorization-Type
+        in: header
+        required: true
+      - description: Payload
+        name: input
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v3.ReplaceCatalogInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/v3.SuccessConfirmation'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v3.GenericErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: string
+definitions:
+  main.GenericErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+  main.UpdateSuccess:
+    type: object
+    properties:
+      affected:
+        description: number of items actually updated
+        type: integer
+      success:
+        type: boolean
+        example: true
+  v3.UpdatePriceListInput:
+    type: object
+    properties:
+      customer_account_numbers:
+        description: An array of customer account numbers to be linked to the price list.
+        type: array
+        items:
+          type: string
+        example:
+        - ACC_NR_1
+        - ACC_NR_2
+      items:
+        description: An array of product pricing details for the price list.
+        type: array
+        items:
+          $ref: '#/definitions/v3.PriceListItem'
+      pricelist_name:
+        description: The name of the price list to be updated or created.
+        type: string
+        example: Standard
+  v3.CatalogItems:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/v3.APISupplierCatalogItem'
+  v3.DeleteCatalogItemsInput:
+    type: object
+    properties:
+      items:
+        description: Array of catalog item ids to delete
+        type: array
+        items:
+          type: integer
+  v3.SetStockStatusInput:
+    type: object
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/v3.StockItemState'
+  main.SuccessConfirmation:
+    type: object
+    properties:
+      success:
+        type: boolean
+        example: true
+  v3.OrderCutoffTimes:
+    type: object
+    properties:
+      fri:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      mon:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      thu:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      tue:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      wed:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+  v3.Seasonality:
+    type: object
+    properties:
+      end_date:
+        description: The end date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
+        type: string
+      start_date:
+        description: The start date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
+        type: string
+  v3.StockItemState:
+    type: object
+    required:
+    - availability
+    - product_code
+    properties:
+      availability:
+        description: only possible values are `in_stock` or `out_of_stock`
+        type: string
+      product_code:
+        type: string
+  main.APISupplierCatalogUnit:
+    type: object
+    properties:
+      price_cents:
+        description: 'The order price in cents for the item per unit.
+
+          For example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.'
+        type: integer
+      stock_count:
+        description: The number of items in stock for the related unit.
+        type: integer
+      unit:
+        description: A unit that the item can be ordered in.
+        type: string
+  v3.UploadCatalogPhotoResponse:
+    type: object
+    properties:
+      linked:
+        type: boolean
+        example: true
+      photo_id:
+        type: string
+        example: d3e4f5a6-7b8c-9d0e-1f2a3b4c5d6e7
+  v3.AvailabilityErrorResponse:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/v3.AvailabilityError'
+  v3.UpdatePriceListOutput:
+    type: object
+    properties:
+      customer_account_numbers:
+        description: An array of customer account numbers linked to the price list.
+        type: array
+        items:
+          type: string
+        example:
+        - ACC_NR_1
+        - ACC_NR_2
+      pricelist_name:
+        description: The name of the price list to be updated or created.
+        type: string
+        example: Standard
+      unlinked_customer_account_numbers:
+        description: An array of customer account numbers unlinked from the price list.
+        type: array
+        items:
+          type: string
+        example:
+        - ACC_NR_0
+  main.APISupplierCatalogItem:
+    type: object
+    properties:
+      allergens:
+        description: List of allergens for the item, if any.
+        type: array
+        items:
+          $ref: '#/definitions/catalog.Allergen'
+      availability:
+        description: Availability status of the item. Defaults to in_stock.
+        type: string
+      currency:
+        description: Currency code for the price. In ISO 4217 three-letter format. Defaults to GBP.
+        type: string
+      description:
+        description: Product description
+        type: string
+      id:
+        description: REKKI's ID to uniquely identify the catalog item (for REKKI internal reference).
+        type: integer
+      name:
+        description: Item name as would be defined on the customer's product list.
+        type: string
+      order_cutoff_times:
+        description: Cutt-off times are the minimum amount of time before delivery when the item can still be ordered.
+        $ref: '#/definitions/catalog.OrderCutoffTimes'
+      product_code:
+        description: 'Product code for the item that maps to the supplier''s catalog.
+
+          Suppliers can modify the product code for future orders at https://supplier.rekki.com'
+        type: string
+      replacement_products:
+        description: List of product codes for alternative items when this item is not available.
+        type: array
+        items:
+          type: string
+      seasonality:
+        description: List of date ranges when the item is in-season.
+        type: array
+        items:
+          $ref: '#/definitions/catalog.Seasonality'
+      units_prices:
+        description: List of units and their prices that the item can be ordered in.
+        type: array
+        items:
+          $ref: '#/definitions/main.APISupplierCatalogUnit'
+  v3.APISupplierCatalogItem:
+    type: object
+    properties:
+      allergens:
+        description: List of allergens for the item, if any.
+        type: array
+        items:
+          $ref: '#/definitions/v3.Allergens'
+      availability:
+        description: Availability status of the item. Defaults to in_stock.
+        type: string
+      currency:
+        description: Currency code for the price. In ISO 4217 three-letter format. Defaults to GBP.
+        type: string
+      description:
+        description: Product description
+        type: string
+      hide_from_rekki:
+        type: boolean
+      id:
+        description: REKKI's ID to uniquely identify the catalog item (for REKKI internal reference).
+        type: integer
+      name:
+        description: Item name as would be defined on the customer's product list.
+        type: string
+      order_cutoff_times:
+        description: Cutt-off times are the minimum amount of time before delivery when the item can still be ordered.
+        $ref: '#/definitions/v3.OrderCutoffTimes'
+      product_code:
+        description: 'Product code for the item that maps to the supplier''s catalog.
+
+          Suppliers can modify the product code for future orders at https://supplier.rekki.com'
+        type: string
+      replacement_products:
+        description: List of product codes for alternative items when this item is not available.
+        type: array
+        items:
+          type: string
+      seasonality:
+        description: List of date ranges when the item is in-season.
+        type: array
+        items:
+          $ref: '#/definitions/v3.Seasonality'
+      units_prices:
+        description: List of units and their prices that the item can be ordered in.
+        type: array
+        items:
+          $ref: '#/definitions/v3.APISupplierCatalogUnit'
+  v3.PriceListItem:
+    type: object
+    properties:
+      price_cents:
+        description: The price of the product in cents.
+        type: integer
+        example: 299
+      product_code:
+        description: The unique code for the product.
+        type: string
+        example: '126372'
+      unit:
+        description: The unit of measurement for the product.
+        type: string
+        example: kg
+  v3.UpdateCatalogInput:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/v3.APISupplierCatalogItem'
+  v3.UpdateInventoryCatalogOutput:
+    type: object
+    properties:
+      customer_account_numbers:
+        description: An array of customer account numbers linked to the inventory location.
+        type: array
+        items:
+          type: string
+        example:
+        - ACC_NR_1
+        - ACC_NR_2
+      location_name:
+        description: The name of the inventory location to be updated or created.
+        type: string
+        example: Warehouse 1
+      unlinked_customer_account_numbers:
+        description: An array of customer account numbers unlinked from the the inventory location.
+        type: array
+        items:
+          type: string
+        example:
+        - ACC_NR_0
+  v3.APISupplierCatalogUnit:
+    type: object
+    properties:
+      price_cents:
+        description: 'The order price in cents for the item per unit.
+
+          For example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.'
+        type: integer
+      size:
+        type: string
+      stock_count:
+        description: The number of items in stock for the related unit.
+        type: integer
+      unit:
+        description: A unit that the item can be ordered in.
+        type: string
+  v3.Allergens:
+    type: object
+    properties:
+      symptoms:
+        description: List of symptoms for the allergy.
+        type: array
+        items:
+          type: string
+      type:
+        description: Type of allergy. For example "contains peanuts" or "may contain peanuts".
+        type: string
+  v3.UpdateSuccess:
+    type: object
+    properties:
+      affected:
+        description: number of items actually updated
+        type: integer
+      success:
+        type: boolean
+        example: true
+  v3.UpdateCatalogInventoryInput:
+    type: object
+    properties:
+      customer_account_numbers:
+        description: An array of customer account numbers to be linked to the inventory location.
+        type: array
+        items:
+          type: string
+        example:
+        - ACC_NR_1
+        - ACC_NR_2
+      items:
+        description: An array of product inventory details
+        type: array
+        items:
+          $ref: '#/definitions/v3.InventoryCatalogItem'
+      location_name:
+        description: The name of the inventory location to be updated or created.
+        type: string
+        example: Warehouse 1
+  main.CatalogItems:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/main.APISupplierCatalogItem'
+  main.ReplaceCatalogInput:
+    type: object
+    properties:
+      data:
+        description: items to insert
+        type: array
+        items:
+          $ref: '#/definitions/main.APISupplierCatalogItem'
+  main.SetStockStatusInput:
+    type: object
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/main.StockItemState'
+  catalog.Allergen:
+    type: object
+    properties:
+      symptoms:
+        description: List of symptoms for the allergy.
+        type: array
+        items:
+          type: string
+      type:
+        description: Type of allergy. For example "contains peanuts" or "may contain peanuts".
+        type: string
+  main.StockItemState:
+    type: object
+    required:
+    - availability
+    - product_code
+    properties:
+      availability:
+        description: only possible values are `in_stock` or `out_of_stock`
+        type: string
+      product_code:
+        type: string
+  catalog.OrderCutoffTimes:
+    type: object
+    properties:
+      fri:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      mon:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      thu:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      tue:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+      wed:
+        description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        type: integer
+  catalog.Seasonality:
+    type: object
+    properties:
+      end_date:
+        description: The end date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
+        type: string
+      start_date:
+        description: The start date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
+        type: string
+  v3.SuccessConfirmation:
+    type: object
+    properties:
+      success:
+        type: boolean
+        example: true
+  v3.InventoryCatalogItem:
+    type: object
+    properties:
+      availability:
+        description: 'Product Availability
+
+          * in_stock
+
+          * out_of_stock'
+        type: string
+        example: in_stock
+      product_code:
+        description: The unique code for the product.
+        type: string
+        example: '126372'
+      unit:
+        description: The unit of measurement for the product.
+        type: string
+        example: kg
+  v3.AvailabilityError:
+    type: object
+    properties:
+      error:
+        type: string
+      item:
+        $ref: '#/definitions/v3.StockItemState'
+  v3.GenericErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+  v3.ReplaceCatalogInput:
+    type: object
+    properties:
+      data:
+        description: items to insert
+        type: array
+        items:
+          $ref: '#/definitions/v3.APISupplierCatalogItem'
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    name: Authorization
+    in: header
