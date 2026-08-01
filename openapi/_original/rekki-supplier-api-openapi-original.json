@@ -1,0 +1,3822 @@
+{
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "The base URL for all API endpoints is https://api.rekki.com/api\n\nApi key value consists of word Bearer together with api key that you can get from integrations@rekki.com\n",
+    "title": "Rekki.com Supplier API",
+    "contact": {
+      "email": "integrations@rekki.com"
+    },
+    "license": {
+      "name": "All rights reserved"
+    },
+    "version": ""
+  },
+  "host": "api.rekki.com",
+  "basePath": "/api",
+  "paths": {
+    "/integration/v1/catalog/items": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Lists all your catalog items. Sorted by creation date, with the oldest appearing first.\nNo input parameters. Options for pagination and sorting direction may be introduced later.\nResponse is a JSON object with a data property that contains catalog items of the authenticated supplier.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Get catalog items for authenticated supplier",
+        "operationId": "GetCatalogItems",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.CatalogItems"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Creates or Updates an item on your catalog. If item with this product_code already exists, you can update this item. Item is looked up by product code",
+        "operationId": "UpdateCatalogItem",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.APISupplierCatalogItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.APISupplierCatalogItem"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/catalog/items/{id}": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Lists all orders placed for the supplier that were placed through REKKI.",
+        "operationId": "GetCatalogItem",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "ID of the item to retrieve. Item IDs are discoverable when listing items.",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.APISupplierCatalogItem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/main.GenericErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete an item from your catalog by its unique ID.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Delete an item from catalog",
+        "operationId": "DeleteCatalogItem",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "ID of the item to retrieve. Item IDs are discoverable when listing items.",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.SuccessConfirmation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/catalog/replace": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Drop all existing items from the catalog and upload new ones",
+        "operationId": "ReplaceCatalog",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.ReplaceCatalogInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.SuccessConfirmation"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/log": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "general"
+        ],
+        "summary": "Post a log message for the supplier for internal debugging. There is no need to handle response from this endpoint",
+        "operationId": "PostLogMessage",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.LogMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/orders/confirm": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Notifies the buyer that the order has been acknowledged.\n\nStatus:` 200 OK`\nBody: `{ success: true}`\n\nStatus: `400 Conflict`\nBody: `{\"error\":\"Order already confirmed\",\"order_id\":...}`\n\nStatus: `400 Not Found`\nBody: `{\"error\":\"Order not found\",\"order_id\":...}`\n\nin errors order_id denotes the order that failed to be confirmed\n\n**the processing stops at first error**\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Confirm a pending order by its reference code.",
+        "operationId": "ConfirmOrders",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.SetIntegrateOrdersInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.SetIntegrateOrdersInput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.FailedOrderError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/orders/list": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Orders are limited to max 30 days old (i.e. timestamp must be within 30 days).\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will **always** get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\n## Exaple usage\n\nIn this JavaScript example, all orders are retrieved. Then it keeps pulling for new orders since the last order, every hour.\n\n  ```\n  const fetch = require(\"node-fetch\");\n\n  const sleep = function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  };\n\n  const fetch_orders = async function(token, since) {\n    let r = await fetch(\n      \"https://api.rekki.com/api/catalog/integration/list_orders_by_supplier\",\n      {\n        method: \"POST\",\n        headers: {\n          Authorization: \"Bearer \" + token,\n          \"X-REKKI-Authorization-Type\": \"supplier_api_token\",\n          \"Content-Type\": \"application/json\",\n          Accept: \"application/json\"\n        },\n        body: JSON.stringify({ since })\n      }\n    );\n    return await r.json();\n  };\n\n  const poll = async function(token, last_rekki_order_time) {\n    let last_order_reference = undefined;\n\n    while (true) {\n      console.log(\"requesting orders since \" + last_rekki_order_time);\n      let response = await fetch_orders(token, last_rekki_order_time);\n\n      for (let order of response.orders) {\n        if (order.reference == last_order_reference) {\n          // here is where we are ignoring the order we\n          // took the inserted_at_ts from\n          // but since we can have more orders in the same inserted_at_ts\n          // you can't just do since: inserted_at_ts+1\n          continue;\n        }\n        if (order.inserted_at_ts >= last_rekki_order_time) {\n          last_rekki_order_time = order.inserted_at_ts;\n          last_order_reference = order.reference;\n        }\n\n        // process(order)\n        console.log(order);\n      }\n      await sleep(3600 * 1000); // wait 1 hour\n    }\n  };\n\n  poll(\"XXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX\", parseInt((+new Date() /1000) - 3600 * 24 * 30));\n  ```\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Lists all orders placed for the supplier that were placed through REKKI.",
+        "operationId": "ListOrdersBySupplier",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.OrderListInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.OrderListOutput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/orders/list_not_integrated": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Lists all orders placed for the supplier that were placed through REKKI and not marked as integrated.",
+        "operationId": "ListNotIntegratedOrders",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.OrderListInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.OrderListOutput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/orders/set_error": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Report failure to integrate an order",
+        "operationId": "MarkIntegrationError",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.SetErrorOrderInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.SuccessConfirmation"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.FailedOrderError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v1/orders/set_integrated": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Mark orders as integrated",
+        "operationId": "MarkOrdersIntegrated",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.SetIntegrateOrdersInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.UpdateSuccess"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v2/catalog/items/availability": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Update availability status for one of the items in the catalog",
+        "operationId": "UpdateCatalogItemAvailability",
+        "deprecated": true,
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/main.SetStockStatusInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/main.UpdateSuccess"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/main.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/inventory": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "### This API endpoint allows to update stock availability for products in the catalog.\n\nBy associating customer accounts with specific inventory locations, suppliers restrict customers to view products that are only available in the stock at the given location.\n\nProvided stock availability details will override previous values for the specified customer accounts.\nAdditionally, if a customer account number that was previously associated with the given inventory location but is omitted from the `customer_account_numbers` list, this account will be unlinked from the inventory location.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Update catalog stock availability for the supplier",
+        "operationId": "UpdateCatalogInventory",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.UpdateCatalogInventoryInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.UpdateInventoryCatalogOutput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/items": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Lists all your catalog items. Sorted by creation date, with the oldest appearing first.\nNo input parameters. Options for pagination and sorting direction may be introduced later.\nResponse is a JSON object with a data property that contains catalog items of the authenticated supplier.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Get catalog items for authenticated supplier",
+        "operationId": "GetCatalogItemsV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.CatalogItems"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Creates or Updates multiple items on your catalog. If item with this product_code already exists, you can update this item. Item is looked up by product code",
+        "operationId": "UpdateCatalogItemsV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.UpdateCatalogInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.CatalogItems"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/items/availability": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Update availability status for one of the items in the catalog",
+        "operationId": "UpdateCatalogItemAvailabilityV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.SetStockStatusInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.UpdateSuccess"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.AvailabilityErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/items/delete": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete items from the catalog by its unique IDs.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Delete items from catalog",
+        "operationId": "DeleteCatalogItemsV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.DeleteCatalogItemsInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.SuccessConfirmation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/items/photo": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Upload a photo for an item in the supplier catalog",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "operationId": "UploadCatalogPhoto",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Product code of the item",
+            "name": "product_code",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Unit of the item",
+            "name": "product_unit",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Comma separated list of tags for the photo",
+            "name": "tags",
+            "in": "query"
+          },
+          {
+            "type": "file",
+            "description": "Image file",
+            "name": "file",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.UploadCatalogPhotoResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/items/{id}": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Fetch a specific catalog item by its Id.",
+        "operationId": "GetCatalogItemV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "ID of the item to retrieve. Item IDs are discoverable when listing items.",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.APISupplierCatalogItem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/pricelist": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "### This API endpoint allows to update price lists for customers.\n\nCustomer accounts can be linked to specific price lists, enabling products to be viewed and purchased at corresponding prices.\n\nProvided price list details will override previous values for the specified customer accounts.\nAdditionally, if a customer account number that was previously associated with the given price list is omitted from the `customer_account_numbers` list, this account will be unlinked from the price list.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Update the price list for the supplier",
+        "operationId": "UpdatePriceList",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/v3.UpdatePriceListInput"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/v3.UpdatePriceListOutput"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/catalog/replace": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nItem name as would be defined on the customer's product list.\n- **`currency`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is GBP</span>\nCurrency code for the price. In [ISO 4217][] three-letter format.\n- **`units_prices`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nList of units and their prices that the item can be ordered in.\n- **`units_prices.unit`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nA unit that the item can be ordered in.\n- **`units_prices.price_cents`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is 0</span>\nThe order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.\n- **`units_prices.stock_count`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nThe number of items in stock for the related unit.\n- **`availability`**  <span style=\"font-size: 12px; font-weight: 500;\">optional, default is \"in_stock\"</span>\nAvailability status of the item. Can be \"in_stock\" or \"out_of_stock\".\n- **`description`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nShort description of the item.\n- **`allergens`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of allergens for the item, if any.\n- **`allergens.type`**  <span style=\"font-size: 12px; font-weight: 500;\">required when allergens is given</span>\nType of allergy. For example \"contains peanuts\" or \"may contain peanuts\".\n- **`allergens.symptoms`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of symptoms for the allergy.\n- **`order_cutoff_times`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nCutt-off times are the minimum amount of time before delivery when the item can still be ordered.\n- **`order_cutoff_times.{mon,tue,wed,thu,fri,sat,sun}`**  <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nMinimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.\n- **`replacement_products`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of product codes for alternative items when this item is not available.\n- **`seasonality`**   <span style=\"font-size: 12px; font-weight: 500;\">optional</span>\nList of date ranges when the item is in-season.\n- **`seasonality.start_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n  The start date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n  - **`seasonality.end_date`**  <span style=\"font-size: 12px; font-weight: 500;\">required when seasonality is given</span>\n    The end date when the item is in season. In [ISO 8601][] calendar date format `YYYY-MM-DD`.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Drop all existing items from the catalog and upload new ones",
+        "operationId": "ReplaceCatalogV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.ReplaceCatalogInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.SuccessConfirmation"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/customers-and-product-list/connect": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Creates new customers or updates existing ones on your REKKI Connect customer list.\n\n**NOTE**: **the processing stops at first error**\n\n### About product lists\n**IMPORTANT**: Customers' product lists will be completely replaced by the lists you upload even if they are empty, in which case the product list for the given customer will be emptied.\n\nIf you want to update just the customer data without touching the product list, use `/integration/v3/customers/connect` instead.\n\nIn effect, the product list update behaviour is equivalent to this:\n- Product matching is done via code and unit.\n- New products in the upload will be added to the customer's product list.\n- Items in the upload that already exist in the customer's product list will have name and size updated, if there are changes.\n- Items that already exist in the customer's product list but are not in the upload will be removed.\n\n\n### About contacts\nNOTE: If you add contacts, the name is required as well as at least one of phone\nor email address.\n\nStatus:` 200 OK`\nBody: `{ \"status\": \"success\"}`\n\nStatus: `500 `\nBody: `{ \"status\": \"error\", \"error\":\"input validation failed: ...\"}`\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "connect_customers"
+        ],
+        "summary": "Creates or Updates customers and their product lists on REKKI Connect.",
+        "operationId": "CreateConnectCustomersAndProductListV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.CreateConnectCustomersAndOrderGuideInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.CreateConnectCustomersOutput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/customers/connect": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create a new customer or update an existing one on your REKKI Connect customer list.\n\nNOTE: If you add contacts, the name is required as well as at least one of phone\nor email address.\n\nStatus:` 200 OK`\nBody: `{ \"status\": \"success\"}`\n\nStatus: `500 `\nBody: `{ \"status\": \"error\", \"error\":\"input validation failed: ...\"}`\n\n**the processing stops at first error**\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "connect_customers"
+        ],
+        "summary": "Creates or Updates customers on REKKI Connect.",
+        "operationId": "CreateConnectCustomersV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.CreateConnectCustomersInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.CreateConnectCustomersOutput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/log": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "general"
+        ],
+        "summary": "Post a log message for the supplier for internal debugging. There is no need to handle response from this endpoint",
+        "operationId": "PostLogMessageV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.LogMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/order-guide": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "order-guide"
+        ],
+        "summary": "Retrieve customer's order guide",
+        "operationId": "GetOrderGuideV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Customer account number",
+            "name": "CustomerAccountNumber",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.OrderGuideResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "order-guide"
+        ],
+        "summary": "Replace customer's order guide",
+        "operationId": "ReplaceOrderGuideV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Parameters",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.OrderGuideRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.OrderGuideResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/orders/confirm": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Notifies the buyer that the order has been acknowledged.\n\nStatus:` 200 OK`\nBody: `{ success: true}`\n\nStatus: `400 Conflict`\nBody: `{\"error\":\"Order already confirmed\",\"order_id\":...}`\n\nStatus: `400 Not Found`\nBody: `{\"error\":\"Order not found\",\"order_id\":...}`\n\nin errors order_id denotes the order that failed to be confirmed\n\n**the processing stops at first error**\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Confirm a pending order by its reference code.",
+        "operationId": "ConfirmOrdersV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.ConfirmOrdersInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.ConfirmOrdersInput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.FailedOrderError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/orders/list": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "**UPDATE TO REFLECT V3 CHANGES**\n\nOrders are limited to max 30 days old (i.e. timestamp must be within 30 days).\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will **always** get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\n## Example usage\n\nIn this JavaScript example, all orders are retrieved. Then it keeps pulling for new orders since the last order, every hour.\n\n  ```\n  const fetch = require(\"node-fetch\");\n\n  const sleep = function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  };\n\n  const fetch_orders = async function(token, since) {\n    let r = await fetch(\n      \"https://api.rekki.com/api/catalog/integration/list_orders_by_supplier\",\n      {\n        method: \"POST\",\n        headers: {\n          Authorization: \"Bearer \" + token,\n          \"X-REKKI-Authorization-Type\": \"supplier_api_token\",\n          \"Content-Type\": \"application/json\",\n          Accept: \"application/json\"\n        },\n        body: JSON.stringify({ since })\n      }\n    );\n    return await r.json();\n  };\n\n  const poll = async function(token, last_rekki_order_time) {\n    let last_order_reference = undefined;\n\n    while (true) {\n      console.log(\"requesting orders since \" + last_rekki_order_time);\n      let response = await fetch_orders(token, last_rekki_order_time.toISOString());\n\n      for (let order of response.orders) {\n        if (order.reference == last_order_reference) {\n          // here is where we are ignoring the order we\n          // took the inserted_at from\n          // but since we can have more orders in the same inserted_at\n          // you can't just do since: inserted_at + 1 second\n          continue;\n        }\n        if (+new Date(order.inserted_at) >= +last_rekki_order_time) {\n          last_rekki_order_time = order.inserted_at;\n          last_order_reference = order.reference;\n        }\n\n        // process(order)\n        console.log(order);\n      }\n      await sleep(3600 * 1000); // wait 1 hour\n    }\n  };\n\n  let startDate = new Date()\n  startDate.setDate(startDate.getDate() - 30)\n  poll(\"XXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX\", startDate)\n  ```\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Lists all orders placed for the supplier that were placed through REKKI.",
+        "operationId": "ListOrdersBySupplierV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.OrderListInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.OrderListOutput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/orders/set_error": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Report failure to integrate an order",
+        "operationId": "MarkIntegrationErrorV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.SetErrorOrderInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.SuccessConfirmation"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.FailedOrderError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v3/orders/set_integrated": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Mark orders as integrated",
+        "operationId": "MarkOrdersIntegratedV3",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v3.SetIntegratedOrdersInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v3.UpdateSuccess"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v4/orders/set_integrated": {
+      "post": {
+        "description": "This endpoint allows you to mark orders as integrated (success) in REKKI's records.\n\n\n                        **Payload:**\n\n\n                        - For each order, you are required to provide a `Reference ID` and an `External ID`.\n\n                        - The `Reference ID` is the REKKI order reference, i.e. **U8806513**.\n\n                        - The `External ID` is the Order ID in your system, i.e. **SO-25001**.\n\n                        - If you can not provide an `External ID`, you can pass the same value used for the `Reference ID`.\n\n\n\n                        **200 Response:**\n\n\n                        - Response will contain separate lists for `updated`, `failed`, and `skipped`.\n\n                        - Each order will also have a list of `messages` with details about the attempt.\n                ",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Mark orders as integrated",
+        "operationId": "MarkOrdersIntegratedV4",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v4.SetIntegratedOrdersInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v4.IntegratedOrdersResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v3.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/integration/v4/orders/list": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "**IMPORTANT - v4 onwards**\n\nCallers **must** use an appropriate JSON parser to parse the output. **Do not** use any sort of simple pattern matching or regular expression-based solution.\n\nThe order of fields in the JSON output is not guaranteed and REKKI may add new fields any time.\n\n**UPDATE TO REFLECT V4 CHANGES**\n\n### The output payload structure has changed:\n\n- Fields `inserted_at, inserted_at_ts, confirmed_by` were added\n  - `confirmed_by` can be null\n- Field `external_po_number` will always be present in the output, but can be null\n- `size` field was added to the order items. It was previously obtainable via an optional input parameter.\n- An `integration` field has been added, containing two nested fields:\n  - `status`, which can be `pending`, `failed` or `success`\n  - `integrated_at`, which will show the timestamp of a successful integration or be null otherwise.\n\nIn general, all fields will always be present, though certain fields can have null values. Check each field specification for details.\n\n### The input payload structure has changed:\n\n- Removed the `skip_integrated`, `show_previous_attempts` and `extra_item_fields` fields.\n- Added a `filter` field.\n  - currently has a nested `integration_statuses` field, which can be used to specify the statuses of the orders to be listed.\n  - by default, no filter is applied.\n\nOrders are limited to 1 month old at a maximum, i.e. if `since` contains an older timestamp, it will be disregarded and a limit of 1 month will be used.\n\n**RELEVANT INFORMATION FROM PREVIOUS VERSIONS**\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will **always** get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\n## Example usage\n\nIn this JavaScript example, all orders are retrieved. Then it keeps pulling for new orders since the last order, every hour.\n\n  ```\n  const fetch = require(\"node-fetch\");\n\n  const sleep = function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  };\n\n  const fetch_orders = async function(token, since) {\n    let r = await fetch(\n      \"https://api.rekki.com/api/integration/v4/orders/list\",\n      {\n        method: \"POST\",\n        headers: {\n          Authorization: \"Bearer \" + token,\n          \"X-REKKI-Authorization-Type\": \"supplier_api_token\",\n          \"Content-Type\": \"application/json\",\n          Accept: \"application/json\"\n        },\n        body: JSON.stringify({ since })\n      }\n    );\n    return await r.json();\n  };\n\n  const poll = async function(token, last_rekki_order_time) {\n    let last_order_reference = undefined;\n\n    while (true) {\n      console.log(\"requesting orders since \" + last_rekki_order_time);\n      let response = await fetch_orders(token, last_rekki_order_time.toISOString());\n\n      for (let order of response.orders) {\n        if (order.reference == last_order_reference) {\n          // here is where we are ignoring the order we\n          // took the inserted_at from\n          // but since we can have more orders in the same inserted_at\n          // you can't just do since: inserted_at + 1 second\n          continue;\n        }\n        if (+new Date(order.inserted_at) >= +last_rekki_order_time) {\n          last_rekki_order_time = order.inserted_at;\n          last_order_reference = order.reference;\n        }\n\n        // process(order)\n        console.log(order);\n      }\n      await sleep(3600 * 1000); // wait 1 hour\n    }\n  };\n\n  let startDate = new Date()\n  startDate.setDate(startDate.getDate() - 30)\n  poll(\"XXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX\", startDate)\n  ```\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Lists all orders placed for the supplier that were placed through REKKI.",
+        "operationId": "ListOrdersBySupplierV4",
+        "parameters": [
+          {
+            "enum": [
+              "supplier_api_token"
+            ],
+            "type": "string",
+            "description": "Required header",
+            "name": "X-REKKI-Authorization-Type",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Payload",
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v4.OrderListInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v4.OrderListOutput"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/v4.GenericErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "catalog.Allergen": {
+      "type": "object",
+      "properties": {
+        "symptoms": {
+          "description": "List of symptoms for the allergy.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "description": "Type of allergy. For example \"contains peanuts\" or \"may contain peanuts\".",
+          "type": "string"
+        }
+      }
+    },
+    "catalog.OrderCutoffTimes": {
+      "type": "object",
+      "properties": {
+        "fri": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "mon": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "thu": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "tue": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "wed": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        }
+      }
+    },
+    "catalog.Seasonality": {
+      "type": "object",
+      "properties": {
+        "end_date": {
+          "description": "The end date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.",
+          "type": "string"
+        },
+        "start_date": {
+          "description": "The start date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.",
+          "type": "string"
+        }
+      }
+    },
+    "integration.Order": {
+      "type": "object",
+      "properties": {
+        "confirmed_at": {
+          "description": "the time at which the supplier confirmed the order (via email, or via the REKKI supplier app, or via the REKKI API)",
+          "type": "string",
+          "example": "2019-08-12T12:20:10-07:00"
+        },
+        "contact_email": {
+          "description": "the email for the person who placed the order",
+          "type": "string"
+        },
+        "contact_info": {
+          "description": "the phone number or email address for the person who placed the order",
+          "type": "string"
+        },
+        "contact_name": {
+          "description": "the full name of the person who placed the order",
+          "type": "string"
+        },
+        "customer_account_no": {
+          "description": "the account number for customer within the supplier system, this can be setup in REKKI supplier app ( https://supplier.rekki.com ).",
+          "type": "string"
+        },
+        "delivery_address": {
+          "description": "delivery address for this specific order (address, postcode)",
+          "type": "string"
+        },
+        "delivery_on": {
+          "description": "expected delivery date (when users place orders they specify for which day it is supposed to be delivered)",
+          "type": "string",
+          "example": "2020-06-01"
+        },
+        "external_po_number": {
+          "description": "External Purchase Order Number for orders placed via external systems (e.g. \"PO123\")",
+          "type": "string"
+        },
+        "inserted_at": {
+          "description": "when was the order created by the customer (ISO date time)",
+          "type": "string"
+        },
+        "inserted_at_ts": {
+          "description": "when was the order created by the customer (unix timestamp in seconds)",
+          "type": "integer"
+        },
+        "items": {
+          "description": "items requests in this order",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/integration.OrderItem"
+          }
+        },
+        "location_name": {
+          "description": "the name of the location that placed the order, can be NULL",
+          "type": "string"
+        },
+        "notes": {
+          "description": "defined by the user at the moment of making an order and usually refer to that specific order (e.g. \"please send fresher tomatoes\")",
+          "type": "string"
+        },
+        "reference": {
+          "description": "REKKI's order reference",
+          "type": "string"
+        },
+        "supplier_notes": {
+          "description": "notes define by the user for the supplier, usually being common across orders (e.g.: \"please use the side entrance for delivery\")",
+          "type": "string"
+        }
+      }
+    },
+    "integration.OrderItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "REKKI's item id, for REKKI internal reference",
+          "type": "string"
+        },
+        "name": {
+          "description": "item name as defined on the customer product list",
+          "type": "string"
+        },
+        "price": {
+          "description": "the item price as set in REKKI",
+          "type": "string"
+        },
+        "price_cents": {
+          "description": "the item price as set in REKKI, in cents",
+          "type": "integer"
+        },
+        "product_code": {
+          "description": "product code that maps to the supplier catalog, suppliers can modify\nthe product code for the future orders for this customer at https://supplier.rekki.com",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "quantity",
+          "type": "number"
+        },
+        "spec": {
+          "description": "details/notes provided by the supplier for the item",
+          "type": "string"
+        },
+        "units": {
+          "description": "item unit as defined on the customer product list",
+          "type": "string"
+        }
+      }
+    },
+    "main.APISupplierCatalogItem": {
+      "type": "object",
+      "properties": {
+        "allergens": {
+          "description": "List of allergens for the item, if any.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/catalog.Allergen"
+          }
+        },
+        "availability": {
+          "description": "Availability status of the item. Defaults to in_stock.",
+          "type": "string"
+        },
+        "currency": {
+          "description": "Currency code for the price. In ISO 4217 three-letter format. Defaults to GBP.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Product description",
+          "type": "string"
+        },
+        "id": {
+          "description": "REKKI's ID to uniquely identify the catalog item (for REKKI internal reference).",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Item name as would be defined on the customer's product list.",
+          "type": "string"
+        },
+        "order_cutoff_times": {
+          "description": "Cutt-off times are the minimum amount of time before delivery when the item can still be ordered.",
+          "$ref": "#/definitions/catalog.OrderCutoffTimes"
+        },
+        "product_code": {
+          "description": "Product code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com",
+          "type": "string"
+        },
+        "replacement_products": {
+          "description": "List of product codes for alternative items when this item is not available.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "seasonality": {
+          "description": "List of date ranges when the item is in-season.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/catalog.Seasonality"
+          }
+        },
+        "units_prices": {
+          "description": "List of units and their prices that the item can be ordered in.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/main.APISupplierCatalogUnit"
+          }
+        }
+      }
+    },
+    "main.APISupplierCatalogUnit": {
+      "type": "object",
+      "properties": {
+        "price_cents": {
+          "description": "The order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.",
+          "type": "integer"
+        },
+        "stock_count": {
+          "description": "The number of items in stock for the related unit.",
+          "type": "integer"
+        },
+        "unit": {
+          "description": "A unit that the item can be ordered in.",
+          "type": "string"
+        }
+      }
+    },
+    "main.CatalogItems": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/main.APISupplierCatalogItem"
+          }
+        }
+      }
+    },
+    "main.FailedOrderError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "order_id": {
+          "type": "any"
+        }
+      }
+    },
+    "main.GenericErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "main.LogMessage": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "description": "possible values are: \"panic\", \"error\", \"fatal\", \"warn\", \"warning\", \"info\", \"debug\", \"trace\"",
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "main.OrderListInput": {
+      "type": "object",
+      "properties": {
+        "since": {
+          "description": "Filters orders created at or after the given unix timestamp (in seconds)",
+          "type": "integer",
+          "example": 1565610869
+        }
+      }
+    },
+    "main.OrderListOutput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "list of not integrated orders",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/integration.Order"
+          }
+        }
+      }
+    },
+    "main.ReplaceCatalogInput": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "items to insert",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/main.APISupplierCatalogItem"
+          }
+        }
+      }
+    },
+    "main.SetErrorOrderInput": {
+      "type": "object",
+      "properties": {
+        "attempts": {
+          "description": "Number of attempts made to push the integration",
+          "type": "integer"
+        },
+        "error": {
+          "description": "error message",
+          "type": "string"
+        },
+        "order": {
+          "type": "object",
+          "properties": {
+            "reference": {
+              "type": "string"
+            }
+          }
+        },
+        "product_code": {
+          "type": "string"
+        }
+      }
+    },
+    "main.SetIntegrateOrdersInput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "Array of References of the orders to confirm, required. Order refs are discoverable when listing orders.",
+          "type": "array",
+          "items": {
+            "type": "any"
+          }
+        }
+      }
+    },
+    "main.SetStockStatusInput": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/main.StockItemState"
+          }
+        }
+      }
+    },
+    "main.StockItemState": {
+      "type": "object",
+      "required": [
+        "availability",
+        "product_code"
+      ],
+      "properties": {
+        "availability": {
+          "description": "only possible values are `in_stock` or `out_of_stock`",
+          "type": "string"
+        },
+        "product_code": {
+          "type": "string"
+        }
+      }
+    },
+    "main.SuccessConfirmation": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "main.UpdateSuccess": {
+      "type": "object",
+      "properties": {
+        "affected": {
+          "description": "number of items actually updated",
+          "type": "integer"
+        },
+        "success": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "v3.APISupplierCatalogItem": {
+      "type": "object",
+      "properties": {
+        "allergens": {
+          "description": "List of allergens for the item, if any.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.Allergens"
+          }
+        },
+        "availability": {
+          "description": "Availability status of the item. Defaults to in_stock.",
+          "type": "string"
+        },
+        "currency": {
+          "description": "Currency code for the price. In ISO 4217 three-letter format. Defaults to GBP.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Product description",
+          "type": "string"
+        },
+        "hide_from_rekki": {
+          "type": "boolean"
+        },
+        "id": {
+          "description": "REKKI's ID to uniquely identify the catalog item (for REKKI internal reference).",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Item name as would be defined on the customer's product list.",
+          "type": "string"
+        },
+        "order_cutoff_times": {
+          "description": "Cutt-off times are the minimum amount of time before delivery when the item can still be ordered.",
+          "$ref": "#/definitions/v3.OrderCutoffTimes"
+        },
+        "product_code": {
+          "description": "Product code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com",
+          "type": "string"
+        },
+        "replacement_products": {
+          "description": "List of product codes for alternative items when this item is not available.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "seasonality": {
+          "description": "List of date ranges when the item is in-season.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.Seasonality"
+          }
+        },
+        "units_prices": {
+          "description": "List of units and their prices that the item can be ordered in.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.APISupplierCatalogUnit"
+          }
+        }
+      }
+    },
+    "v3.APISupplierCatalogUnit": {
+      "type": "object",
+      "properties": {
+        "price_cents": {
+          "description": "The order price in cents for the item per unit.\nFor example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.",
+          "type": "integer"
+        },
+        "size": {
+          "type": "string"
+        },
+        "stock_count": {
+          "description": "The number of items in stock for the related unit.",
+          "type": "integer"
+        },
+        "unit": {
+          "description": "A unit that the item can be ordered in.",
+          "type": "string"
+        }
+      }
+    },
+    "v3.Allergens": {
+      "type": "object",
+      "properties": {
+        "symptoms": {
+          "description": "List of symptoms for the allergy.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "description": "Type of allergy. For example \"contains peanuts\" or \"may contain peanuts\".",
+          "type": "string"
+        }
+      }
+    },
+    "v3.AvailabilityError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "item": {
+          "$ref": "#/definitions/v3.StockItemState"
+        }
+      }
+    },
+    "v3.AvailabilityErrorResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.AvailabilityError"
+          }
+        }
+      }
+    },
+    "v3.CatalogItems": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.APISupplierCatalogItem"
+          }
+        }
+      }
+    },
+    "v3.ConfirmOrdersInput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "Array of References of the orders to confirm, required. Order refs are discoverable when listing orders.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v3.ConnectCustomerAndOrderGuideInput": {
+      "type": "object",
+      "required": [
+        "account_number",
+        "delivery_address",
+        "name"
+      ],
+      "properties": {
+        "account_number": {
+          "type": "string"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.ConnectCustomerContactInput"
+          }
+        },
+        "delivery_address": {
+          "type": "string"
+        },
+        "delivery_instructions": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "order_confirmation_email": {
+          "type": "string"
+        },
+        "product_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.ConnectCustomerItem"
+          }
+        }
+      }
+    },
+    "v3.ConnectCustomerContactInput": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.ConnectCustomerInput": {
+      "type": "object",
+      "required": [
+        "account_number",
+        "delivery_address",
+        "name"
+      ],
+      "properties": {
+        "account_number": {
+          "type": "string"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.ConnectCustomerContactInput"
+          }
+        },
+        "delivery_address": {
+          "type": "string"
+        },
+        "delivery_instructions": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "order_confirmation_email": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.ConnectCustomerItem": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "unit": {
+          "type": "string"
+        },
+        "spec": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.CreateConnectCustomersAndOrderGuideInput": {
+      "type": "object",
+      "required": [
+        "customers"
+      ],
+      "properties": {
+        "customers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/v3.ConnectCustomerAndOrderGuideInput"
+          }
+        }
+      }
+    },
+    "v3.CreateConnectCustomersInput": {
+      "type": "object",
+      "required": [
+        "customers"
+      ],
+      "properties": {
+        "customers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.ConnectCustomerInput"
+          }
+        }
+      }
+    },
+    "v3.CreateConnectCustomersOutput": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "num_customers_created": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.DeleteCatalogItemsInput": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "description": "Array of catalog item ids to delete",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "v3.DeliveryAddress": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.FailedOrderError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "order_id": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.GenericErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.InventoryCatalogItem": {
+      "type": "object",
+      "properties": {
+        "availability": {
+          "description": "Product Availability\n* in_stock\n* out_of_stock",
+          "type": "string",
+          "example": "in_stock"
+        },
+        "product_code": {
+          "description": "The unique code for the product.",
+          "type": "string",
+          "example": "126372"
+        },
+        "unit": {
+          "description": "The unit of measurement for the product.",
+          "type": "string",
+          "example": "kg"
+        }
+      }
+    },
+    "v3.LogMessage": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "description": "possible values are: \"panic\", \"error\", \"fatal\", \"warn\", \"warning\", \"info\", \"debug\", \"trace\"",
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.Order": {
+      "type": "object",
+      "properties": {
+        "confirmed_at": {
+          "description": "the time at which the supplier confirmed the order (via email, or via the REKKI supplier app, or via the REKKI API)",
+          "type": "string",
+          "example": "2019-08-12T12:20:10-07:00"
+        },
+        "contact_email": {
+          "description": "the email for the person who placed the order",
+          "type": "string"
+        },
+        "contact_info": {
+          "description": "the phone number or email address for the person who placed the order",
+          "type": "string"
+        },
+        "contact_name": {
+          "description": "the full name of the person who placed the order",
+          "type": "string"
+        },
+        "customer_account_no": {
+          "description": "the account number for customer within the supplier system, this can be setup in REKKI supplier app ( https://supplier.rekki.com ).",
+          "type": "string"
+        },
+        "delivery_address": {
+          "description": "delivery address for this specific order",
+          "$ref": "#/definitions/v3.DeliveryAddress"
+        },
+        "delivery_instructions": {
+          "description": "defined by the user at the moment of making an order (e.g. \"opening hours 8am - 4pm.\")",
+          "type": "string"
+        },
+        "delivery_on": {
+          "description": "expected delivery date (when users place orders they specify for which day it is supposed to be delivered)",
+          "type": "string",
+          "example": "2020-06-01"
+        },
+        "external_po_number": {
+          "description": "External Purchase Order Number for orders placed via external systems (e.g. \"PO123\")",
+          "type": "string"
+        },
+        "inserted_at": {
+          "description": "when was the order created by the customer (ISO date time)",
+          "type": "string"
+        },
+        "inserted_at_ts": {
+          "description": "when was the order created by the customer (unix timestamp in seconds)",
+          "type": "integer"
+        },
+        "items": {
+          "description": "items requests in this order",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.OrderItem"
+          }
+        },
+        "location_name": {
+          "description": "the name of the location that placed the order, can be NULL",
+          "type": "string"
+        },
+        "notes": {
+          "description": "defined by the user at the moment of making an order and usually refer to that specific order (e.g. \"please send fresher tomatoes\")",
+          "type": "string"
+        },
+        "reference": {
+          "description": "REKKI's order reference",
+          "type": "string"
+        },
+        "supplier_notes": {
+          "description": "notes define by the user for the supplier, usually being common across orders (e.g.: \"please use the side entrance for delivery\")",
+          "type": "string"
+        },
+        "tags": {
+          "description": "tags for this order",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v3.OrderCutoffTimes": {
+      "type": "object",
+      "properties": {
+        "fri": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "mon": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "thu": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "tue": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        },
+        "wed": {
+          "description": "Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.",
+          "type": "integer"
+        }
+      }
+    },
+    "v3.OrderGuideObject": {
+      "type": "object",
+      "required": [
+        "name",
+        "reference",
+        "units"
+      ],
+      "properties": {
+        "reference": {
+          "description": "product code for the item that maps to the supplier’s catalog.",
+          "type": "string",
+          "x-order": "0",
+          "example": "BLBP"
+        },
+        "name": {
+          "description": "item name as would be defined on the customer’s product list.",
+          "type": "string",
+          "x-order": "1",
+          "example": "Blueberries"
+        },
+        "units": {
+          "description": "a unit that the item can be ordered in.",
+          "type": "string",
+          "x-order": "2",
+          "example": "Pint"
+        },
+        "price": {
+          "description": "the order price in cents for the item per unit.",
+          "type": "string",
+          "x-order": "3",
+          "example": "299"
+        },
+        "archived": {
+          "description": "status of an item in the order-guide.\nIf False meaning the item is currently visible to the customer,\nby setting it True the item can temporarily be made unavailable.",
+          "type": "boolean",
+          "x-order": "4",
+          "example": false
+        },
+        "deleted": {
+          "description": "status of an item in the order-guide. If True means the item has been deleted from the order-guide",
+          "type": "boolean",
+          "x-order": "5",
+          "example": false
+        }
+      }
+    },
+    "v3.OrderGuideParameters": {
+      "type": "object",
+      "required": [
+        "name",
+        "reference",
+        "units"
+      ],
+      "properties": {
+        "reference": {
+          "description": "product code for the item that maps to the supplier’s catalog.",
+          "type": "string",
+          "x-order": "0",
+          "example": "BLBP"
+        },
+        "name": {
+          "description": "item name as would be defined on the customer’s product list.",
+          "type": "string",
+          "x-order": "1",
+          "example": "Blueberries"
+        },
+        "units": {
+          "description": "a unit that the item can be ordered in.",
+          "type": "string",
+          "x-order": "2",
+          "example": "Pint"
+        },
+        "price": {
+          "description": "the order price in cents for the item per unit.",
+          "type": "string",
+          "x-order": "3",
+          "example": "299"
+        },
+        "archived": {
+          "description": "status of an item in the order-guide.\nIf False meaning the item is currently visible to the customer,\nby setting it True the item can temporarily be made unavailable.",
+          "type": "boolean",
+          "x-order": "4",
+          "example": false
+        }
+      }
+    },
+    "v3.OrderGuideRequest": {
+      "type": "object",
+      "required": [
+        "customer_account_number",
+        "products"
+      ],
+      "properties": {
+        "customer_account_number": {
+          "description": "the customer the order-guide belongs to",
+          "type": "string",
+          "example": "REKK1"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.OrderGuideParameters"
+          }
+        }
+      }
+    },
+    "v3.OrderGuideResponse": {
+      "type": "object",
+      "properties": {
+        "customer_account_number": {
+          "type": "string",
+          "example": "REKK1"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.OrderGuideObject"
+          }
+        }
+      }
+    },
+    "v3.OrderIntegrationError": {
+      "type": "object",
+      "properties": {
+        "attempts": {
+          "description": "Number of attempts made to push the integration",
+          "type": "integer"
+        },
+        "error": {
+          "description": "error message",
+          "type": "string"
+        },
+        "product_code": {
+          "description": "product code",
+          "type": "string"
+        },
+        "reference": {
+          "description": "Order reference",
+          "type": "string"
+        }
+      }
+    },
+    "v3.OrderItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "REKKI's item id, for REKKI internal reference",
+          "type": "string"
+        },
+        "name": {
+          "description": "item name as defined on the customer product list",
+          "type": "string"
+        },
+        "price": {
+          "description": "the item price as set in REKKI",
+          "type": "string"
+        },
+        "price_cents": {
+          "description": "the item price as set in REKKI, in cents",
+          "type": "integer"
+        },
+        "product_code": {
+          "description": "product code that maps to the supplier catalog, suppliers can modify\nthe product code for the future orders for this customer at https://supplier.rekki.com",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "quantity",
+          "type": "number"
+        },
+        "size": {
+          "description": "size of the item. OPTIONAL FIELD. Will only be returned if requested. See v3.OrderListInput.ExtraItemFields",
+          "type": "string"
+        },
+        "spec": {
+          "description": "details/notes provided by the supplier for the item",
+          "type": "string"
+        },
+        "units": {
+          "description": "item unit as defined on the customer product list",
+          "type": "string"
+        }
+      }
+    },
+    "v3.OrderListInput": {
+      "type": "object",
+      "properties": {
+        "extra_item_fields": {
+          "description": "Show extra item fields\n* size - show item size",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "size"
+            ]
+          }
+        },
+        "show_previous_attempts": {
+          "description": "Show previous integration attempts",
+          "type": "boolean",
+          "default": false
+        },
+        "since": {
+          "description": "Filters orders created at or after the given timestamp",
+          "type": "string",
+          "example": "2006-01-02T15:04:05-07:00"
+        },
+        "skip_integrated": {
+          "description": "Only fetch orders that were not marked as integrated",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "v3.OrderListOutput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "list of not integrated orders",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.Order"
+          }
+        }
+      }
+    },
+    "v3.PriceListItem": {
+      "type": "object",
+      "properties": {
+        "price_cents": {
+          "description": "The price of the product in cents.",
+          "type": "integer",
+          "example": 299
+        },
+        "product_code": {
+          "description": "The unique code for the product.",
+          "type": "string",
+          "example": "126372"
+        },
+        "unit": {
+          "description": "The unit of measurement for the product.",
+          "type": "string",
+          "example": "kg"
+        }
+      }
+    },
+    "v3.ReplaceCatalogInput": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "items to insert",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.APISupplierCatalogItem"
+          }
+        }
+      }
+    },
+    "v3.Seasonality": {
+      "type": "object",
+      "properties": {
+        "end_date": {
+          "description": "The end date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.",
+          "type": "string"
+        },
+        "start_date": {
+          "description": "The start date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.",
+          "type": "string"
+        }
+      }
+    },
+    "v3.SetErrorOrderInput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "list of orders failed to integrate, required",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.OrderIntegrationError"
+          }
+        }
+      }
+    },
+    "v3.SetIntegratedOrdersInput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "Array of References of the orders to mark as integrated, required. Order refs are discoverable when listing orders.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v4.SetIntegratedOrdersInput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "Array of References of the orders to mark as integrated, required. Order refs are discoverable when listing orders.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "reference_id": {
+                "type": "string"
+              },
+              "external_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "reference_id",
+              "external_id"
+            ]
+          }
+        }
+      }
+    },
+    "v3.SetStockStatusInput": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.StockItemState"
+          }
+        }
+      }
+    },
+    "v3.StockItemState": {
+      "type": "object",
+      "required": [
+        "availability",
+        "product_code"
+      ],
+      "properties": {
+        "availability": {
+          "description": "only possible values are `in_stock` or `out_of_stock`",
+          "type": "string"
+        },
+        "product_code": {
+          "type": "string"
+        }
+      }
+    },
+    "v3.SuccessConfirmation": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "v3.UpdateCatalogInput": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.APISupplierCatalogItem"
+          }
+        }
+      }
+    },
+    "v3.UpdateCatalogInventoryInput": {
+      "type": "object",
+      "properties": {
+        "customer_account_numbers": {
+          "description": "An array of customer account numbers to be linked to the inventory location.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "ACC_NR_1",
+            "ACC_NR_2"
+          ]
+        },
+        "items": {
+          "description": "An array of product inventory details",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.InventoryCatalogItem"
+          }
+        },
+        "location_name": {
+          "description": "The name of the inventory location to be updated or created.",
+          "type": "string",
+          "example": "Warehouse 1"
+        }
+      }
+    },
+    "v3.UpdateInventoryCatalogOutput": {
+      "type": "object",
+      "properties": {
+        "customer_account_numbers": {
+          "description": "An array of customer account numbers linked to the inventory location.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "ACC_NR_1",
+            "ACC_NR_2"
+          ]
+        },
+        "location_name": {
+          "description": "The name of the inventory location to be updated or created.",
+          "type": "string",
+          "example": "Warehouse 1"
+        },
+        "unlinked_customer_account_numbers": {
+          "description": "An array of customer account numbers unlinked from the the inventory location.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "ACC_NR_0"
+          ]
+        }
+      }
+    },
+    "v3.UpdatePriceListInput": {
+      "type": "object",
+      "properties": {
+        "customer_account_numbers": {
+          "description": "An array of customer account numbers to be linked to the price list.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "ACC_NR_1",
+            "ACC_NR_2"
+          ]
+        },
+        "items": {
+          "description": "An array of product pricing details for the price list.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v3.PriceListItem"
+          }
+        },
+        "pricelist_name": {
+          "description": "The name of the price list to be updated or created.",
+          "type": "string",
+          "example": "Standard"
+        }
+      }
+    },
+    "v3.UpdatePriceListOutput": {
+      "type": "object",
+      "properties": {
+        "customer_account_numbers": {
+          "description": "An array of customer account numbers linked to the price list.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "ACC_NR_1",
+            "ACC_NR_2"
+          ]
+        },
+        "pricelist_name": {
+          "description": "The name of the price list to be updated or created.",
+          "type": "string",
+          "example": "Standard"
+        },
+        "unlinked_customer_account_numbers": {
+          "description": "An array of customer account numbers unlinked from the price list.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "ACC_NR_0"
+          ]
+        }
+      }
+    },
+    "v4.IntegratedOrdersResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true
+        },
+        "count": {
+          "description": "number of orders requested",
+          "type": "integer"
+        },
+        "updated": {
+          "description": "collection of orders updated",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v4.OrderResponseInfo"
+          }
+        },
+        "skipped": {
+          "description": "collection of orders skipped",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v4.OrderResponseInfo"
+          }
+        },
+        "failed": {
+          "description": "collection of orders that failed to update",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v4.OrderResponseInfo"
+          }
+        }
+      }
+    },
+    "v4.OrderResponseInfo": {
+      "type": "object",
+      "properties": {
+        "reference_id": {
+          "type": "string",
+          "description": "REKKI's order reference"
+        },
+        "external_id": {
+          "type": "string",
+          "description": "External order reference, if applicable"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v3.UpdateSuccess": {
+      "type": "object",
+      "properties": {
+        "affected": {
+          "description": "number of items actually updated",
+          "type": "integer"
+        },
+        "success": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "v3.UploadCatalogPhotoResponse": {
+      "type": "object",
+      "properties": {
+        "linked": {
+          "type": "boolean",
+          "example": true
+        },
+        "photo_id": {
+          "type": "string",
+          "example": "d3e4f5a6-7b8c-9d0e-1f2a3b4c5d6e7"
+        }
+      }
+    },
+    "v4.ConnectData": {
+      "type": "object",
+      "properties": {
+        "original_email_subject": {
+          "description": "Original REKKI Connect email subject line. Can be null.",
+          "type": "string"
+        }
+      }
+    },
+    "v4.DeliveryAddress": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      }
+    },
+    "v4.GenericErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "v4.IntegrationData": {
+      "type": "object",
+      "properties": {
+        "integrated_at": {
+          "description": "The time when the order was integrated successfully, or null if it was not integrated yet.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The integration status. Can be one of: pending, done, failed",
+          "type": "string"
+        }
+      }
+    },
+    "v4.Order": {
+      "type": "object",
+      "properties": {
+        "confirmed_at": {
+          "description": "the time at which the supplier confirmed the order (via email, or via the REKKI supplier app, or via the REKKI API)",
+          "type": "string",
+          "example": "2019-08-12T12:20:10-07:00"
+        },
+        "confirmed_by": {
+          "description": "who confirmed the order (can be \"supplier-api\" or an email address if confirmed via the email button)",
+          "type": "string"
+        },
+        "contact_email": {
+          "description": "the email for the person who placed the order",
+          "type": "string"
+        },
+        "contact_info": {
+          "description": "the phone number or email address for the person who placed the order",
+          "type": "string"
+        },
+        "contact_name": {
+          "description": "the full name of the person who placed the order",
+          "type": "string"
+        },
+        "customer_account_no": {
+          "description": "the account number for customer within the supplier system, this can be setup in REKKI supplier app ( https://supplier.rekki.com ).",
+          "type": "string"
+        },
+        "customer_department": {
+          "description": "the department name for the customer, e.g. \"kitchen\", \"bar\", \"office\", etc.",
+          "type": "string"
+        },
+        "delivery_address": {
+          "description": "delivery address for this specific order",
+          "$ref": "#/definitions/v4.DeliveryAddress"
+        },
+        "delivery_instructions": {
+          "description": "defined by the user at the moment of making an order (e.g. \"opening hours 8am - 4pm.\")",
+          "type": "string"
+        },
+        "delivery_on": {
+          "description": "expected delivery date (when users place orders they specify for which day it is supposed to be delivered)",
+          "type": "string",
+          "example": "2020-06-01"
+        },
+        "external_po_number": {
+          "description": "External Purchase Order Number for orders placed via external systems (e.g. \"PO123\")",
+          "type": "string"
+        },
+        "inserted_at": {
+          "description": "when was the order created by the customer (ISO date time)",
+          "type": "string"
+        },
+        "inserted_at_ts": {
+          "description": "when was the order created by the customer (unix timestamp in seconds)",
+          "type": "integer"
+        },
+        "integration": {
+          "description": "integration-related data",
+          "$ref": "#/definitions/v4.IntegrationData"
+        },
+        "items": {
+          "description": "items requests in this order",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v4.OrderItem"
+          }
+        },
+        "location_name": {
+          "description": "the name of the location that placed the order, can be NULL",
+          "type": "string"
+        },
+        "notes": {
+          "description": "defined by the user at the moment of making an order and usually refer to that specific order (e.g. \"please send fresher tomatoes\")",
+          "type": "string"
+        },
+        "reference": {
+          "description": "REKKI's order reference",
+          "type": "string"
+        },
+        "rekki_connect": {
+          "description": "REKKI Connect data. Can be null if it's not a REKKI Connect order or there is no relevant data.",
+          "$ref": "#/definitions/v4.ConnectData"
+        },
+        "supplier_notes": {
+          "description": "notes define by the user for the supplier, usually being common across orders (e.g.: \"please use the side entrance for delivery\")",
+          "type": "string"
+        },
+        "tags": {
+          "description": "tags for this order",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "updated_at": {
+          "description": "when was the order last updated (ISO date time)",
+          "type": "string"
+        },
+        "updated_at_ts": {
+          "description": "when was the order last updated (unix timestamp in seconds)",
+          "type": "integer"
+        }
+      }
+    },
+    "v4.OrderItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "REKKI's item id, for REKKI internal reference",
+          "type": "string"
+        },
+        "name": {
+          "description": "item name as defined on the customer product list",
+          "type": "string"
+        },
+        "price": {
+          "description": "the item price as set in REKKI",
+          "type": "string"
+        },
+        "price_cents": {
+          "description": "the item price as set in REKKI, in cents",
+          "type": "integer"
+        },
+        "product_code": {
+          "description": "product code that maps to the supplier catalog, suppliers can modify\nthe product code for the future orders for this customer at https://supplier.rekki.com",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "quantity",
+          "type": "number"
+        },
+        "size": {
+          "description": "size of the item.",
+          "type": "string"
+        },
+        "spec": {
+          "description": "details/notes provided by the supplier for the item",
+          "type": "string"
+        },
+        "units": {
+          "description": "item unit as defined on the customer product list",
+          "type": "string"
+        }
+      }
+    },
+    "v4.OrderListInput": {
+      "type": "object",
+      "properties": {
+        "enable_oob": {
+          "description": "Enable OOB processing for the orders. Optional.",
+          "type": "boolean"
+        },
+        "filter": {
+          "description": "Show only orders matching the filters. Optional.",
+          "$ref": "#/definitions/v4.OrderListInputFilter"
+        },
+        "since": {
+          "description": "Show only orders created at or after the given timestamp. Required.",
+          "type": "string",
+          "example": "2006-01-02T15:04:05-07:00"
+        }
+      }
+    },
+    "v4.OrderListInputFilter": {
+      "type": "object",
+      "properties": {
+        "integration_statuses": {
+          "description": "include only orders with these statuses in the list. If empty or the field is missing, the response will include all statuses.",
+          "type": "array",
+          "items": {
+            "description": "The integration status. Can be one of: pending, done, failed",
+            "type": "string"
+          },
+          "example": [
+            "pending",
+            "failed"
+          ]
+        }
+      }
+    },
+    "v4.OrderListOutput": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "list of not integrated orders",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v4.Order"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

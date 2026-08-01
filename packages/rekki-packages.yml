@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/rekki
+packages:
+  - language: go
+    registry: github
+    name: rekki/supplier-client-go
+    url: https://github.com/rekki/supplier-client-go
+    install: go get github.com/rekki/supplier-client-go
+    official: true
+    description: First-party Go client for the REKKI Supplier API.
+  - language: go
+    registry: github
+    name: rekki/supplier-client-go-generated
+    url: https://github.com/rekki/supplier-client-go-generated
+    install: go get github.com/rekki/supplier-client-go-generated
+    official: true
+    description: Generated Go client for the REKKI public Supplier API.

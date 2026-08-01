@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for REKKI Supplier API
+  version: 1.0.0
+extends: openapi/rekki-supplier-api-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-api-evangelist-source: https://api.rekki.com/swagger/doc.json
+      description: >-
+        REKKI Supplier API — lets food wholesale suppliers manage their catalog
+        (items, inventory, price lists), receive and confirm restaurant orders,
+        and manage REKKI Connect customers and their order guides. Auth is a
+        supplier bearer token plus an X-REKKI-Authorization-Type header.
+      x-authentication:
+        type: apiKey
+        header: Authorization
+        extra_header: 'X-REKKI-Authorization-Type: supplier_api_token'
+        token_contact: integrations@rekki.com
+  - target: $.info
+    update:
+      x-error-envelope: '{"error": "string"}'
+      x-versioning: uri-path (v1..v4)

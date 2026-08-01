@@ -1,0 +1,14 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/rekki-supplier-api-openapi-original.json
+skills:
+  - file: rekki-sync-catalog.md
+    name: Sync a supplier catalog to REKKI
+    api: openapi/rekki-supplier-api-openapi-original.json
+    operations: [ReplaceCatalogV3, UpdateCatalogItemsV3, GetCatalogItemsV3, GetCatalogItemV3,
+      DeleteCatalogItemsV3, UpdateCatalogInventory, UpdatePriceList, UpdateCatalogItemAvailabilityV3]
+  - file: rekki-process-orders.md
+    name: Process restaurant orders from REKKI
+    api: openapi/rekki-supplier-api-openapi-original.json
+    operations: [ListOrdersBySupplierV4, ListNotIntegratedOrders, ConfirmOrdersV3,
+      MarkOrdersIntegratedV4, MarkIntegrationErrorV3]

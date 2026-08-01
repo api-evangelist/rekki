@@ -1,0 +1,15 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rekki-supplier-api-openapi-original.json
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/rekki-supplier-api-openapi-original.json

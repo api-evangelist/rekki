@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rekki-supplier-api-openapi-original.json
+standards:
+  - id: openapi-swagger2
+    conforms: true
+    evidence: Published Swagger 2.0 document at api.rekki.com/swagger/doc.json
+  - id: oauth2
+    conforms: false
+    evidence: securityDefinitions declare apiKey (bearer token) only, no oauth2 flows
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors use a flat {"error": string} envelope, not application/problem+json'
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404
+  - id: json-api
+    conforms: false
+  - id: pagination
+    conforms: false
+    evidence: No cursor/offset pagination in the spec
+  - id: idempotency
+    conforms: false
+    evidence: No documented idempotency-key mechanism

@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rekki-supplier-api-openapi-original.json
+versioning:
+  scheme: uri-path
+  versions: [v1, v2, v3, v4]
+  current: v3 (catalog) / v4 (orders)
+  note: >-
+    New capability is shipped under a new path version (/integration/vN); older
+    versions remain available for backward compatibility. No formal deprecation
+    policy or Sunset/Deprecation header support is published.
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+status_page: null
+status_page_note: >-
+  status.rekki.com resolves but 302-redirects to the marketing homepage; there is
+  no dedicated public status page.
+deprecated_operations: []

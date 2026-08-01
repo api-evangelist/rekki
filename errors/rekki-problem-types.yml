@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rekki-supplier-api-openapi-original.json
+format: custom
+envelope:
+  field: error
+  content_type: application/json
+  schema: 'main.GenericErrorResponse / v3.GenericErrorResponse ({"error": "string"})'
+notes: >-
+  The Supplier API returns a flat JSON error envelope with a single `error`
+  string field (not RFC 9457 problem+json). Bulk operations (orders, catalog
+  availability) return per-item error arrays (v3.AvailabilityErrorResponse,
+  v3.SetErrorOrderInput) alongside the HTTP status.
+problems:
+  - status: 400
+    title: Bad Request
+    meaning: Request payload was malformed or failed validation.
+    occurs_on: 24 operations
+  - status: 401
+    title: Unauthorized
+    meaning: >-
+      Missing/invalid Authorization bearer token or missing
+      `X-REKKI-Authorization-Type: supplier_api_token` header.
+    occurs_on: 30 operations
+  - status: 404
+    title: Not Found
+    meaning: Requested catalog item or resource does not exist.
+    occurs_on: 2 operations
+  - status: 500
+    title: Internal Server Error
+    meaning: Unexpected server-side error.
+    occurs_on: 30 operations

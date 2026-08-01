@@ -11,7 +11,7 @@ info:
     email: integrations@rekki.com
   license:
     name: All rights reserved
-  version: ''
+  version: "1.0"
 host: api.rekki.com
 basePath: /api
 schemes:

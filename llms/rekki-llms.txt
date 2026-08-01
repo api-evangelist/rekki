@@ -1,0 +1,26 @@
+# REKKI
+
+> REKKI is a food wholesale ordering platform connecting restaurants (buyers) with their suppliers. The public Supplier API lets suppliers manage their product catalog, inventory, and price lists; receive, list, and confirm restaurant orders; and manage REKKI Connect customers and their order guides. REKKI's current product suite also includes AI agents for distributors (OrderAI, InboxAI, MenuAI) and a Marketplace.
+
+## APIs
+- [REKKI Supplier API](https://api.rekki.com/swagger/index.html): HTTP API for suppliers to sync catalog and process orders. Base URL https://api.rekki.com, base path /api.
+
+## Specs
+- [Supplier API OpenAPI (Swagger 2.0)](https://api.rekki.com/swagger/doc.json): 32 operations across /integration/v1..v4.
+
+## Docs
+- [Catalogue API docs](https://github.com/rekki/supplier-api/blob/master/documentation/catalog-api.md)
+- [Order API docs](https://github.com/rekki/supplier-api/blob/master/documentation/order-api.md)
+- [supplier-api repo](https://github.com/rekki/supplier-api)
+
+## SDKs
+- [supplier-client-go](https://github.com/rekki/supplier-client-go): First-party Go client.
+- [supplier-client-go-generated](https://github.com/rekki/supplier-client-go-generated): Generated Go client.
+
+## Auth
+- Bearer token in Authorization header, plus X-REKKI-Authorization-Type: supplier_api_token. Request a token from integrations@rekki.com.
+
+## Company
+- [Website](https://rekki.com/)
+- [Suppliers](https://rekki.com/suppliers)
+- [Terms & Privacy (PDFs)](https://tandc.rekki.com/)

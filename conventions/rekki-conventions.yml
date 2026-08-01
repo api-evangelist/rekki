@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rekki-supplier-api-openapi-original.json
+authentication:
+  style: bearer-token
+  header: Authorization
+  scheme: "Bearer <TOKEN>"
+  extra_header:
+    name: X-REKKI-Authorization-Type
+    value: supplier_api_token
+    required: true
+  token_provisioning: Contact integrations@rekki.com for a supplier API token.
+  docs: https://github.com/rekki/supplier-api/blob/master/documentation/catalog-api.md
+base_url: https://api.rekki.com
+base_path: /api
+versioning:
+  style: uri-path
+  observed: [v1, v2, v3, v4]
+  current: v3/v4
+  note: >-
+    Endpoints are versioned in the path (/integration/v1..v4). Catalog is on v3,
+    orders on v3/v4; v1/v2 remain for backward compatibility.
+error_envelope:
+  field: error
+  shape: '{"error": "string"}'
+  bulk_shape: per-item error arrays (v3.AvailabilityErrorResponse, v3.SetErrorOrderInput)
+  see: errors/rekki-problem-types.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header is documented; catalog "replace" endpoints are inherently full-overwrite.
+pagination:
+  supported: false
+  note: Order listing is filtered by date/status via POST body; no cursor/offset pagination documented in the spec.
+content_type: application/json
+cross_links:
+  authentication: authentication/rekki-authentication.yml
+  errors: errors/rekki-problem-types.yml
+  data_model: data-model/rekki-data-model.yml

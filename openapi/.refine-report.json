@@ -1,0 +1,28 @@
+{
+  "provider": "rekki",
+  "sources": [
+    "rekki-catalog-api-openapi.yml",
+    "rekki-connect-customers-api-openapi.yml",
+    "rekki-general-api-openapi.yml",
+    "rekki-order-guide-api-openapi.yml",
+    "rekki-orders-api-openapi.yml"
+  ],
+  "outputs": [
+    "rekki-catalog-api-openapi.yml",
+    "rekki-connect-customers-api-openapi.yml",
+    "rekki-general-api-openapi.yml",
+    "rekki-order-guide-api-openapi.yml",
+    "rekki-orders-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "rekki-catalog-api-openapi.yml: info.version missing",
+    "rekki-connect-customers-api-openapi.yml: info.version missing",
+    "rekki-general-api-openapi.yml: info.version missing",
+    "rekki-order-guide-api-openapi.yml: info.version missing",
+    "rekki-orders-api-openapi.yml: info.version missing"
+  ],
+  "notes": [],
+  "skipped": []
+}

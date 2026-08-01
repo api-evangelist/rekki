@@ -1,0 +1,60 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rekki-supplier-api-openapi-original.json
+description: >-
+  Entity graph derived from the REKKI Supplier API definitions. The API is
+  organised around a supplier's catalog (items + inventory + price list),
+  the orders placed against it, and the Connect customers with their order guides.
+entities:
+  - name: CatalogItem
+    schema: v3.APISupplierCatalogItem
+    identifier: id
+    business_key: product_code
+    fields: [name, description, product_code, currency, units_prices, availability,
+      allergens, seasonality, order_cutoff_times, replacement_products, hide_from_rekki]
+  - name: InventoryItem
+    schema: v3.InventoryCatalogItem
+    business_key: product_code
+    fields: [product_code, unit, availability]
+  - name: Order
+    schema: integration.Order
+    identifier: reference
+    fields: [reference, customer_account_no, location_name, delivery_address, delivery_on,
+      contact_name, contact_email, notes, external_po_number, items, confirmed_at, inserted_at]
+  - name: OrderItem
+    schema: integration.OrderItem
+    identifier: id
+    fields: [id, name, product_code, quantity, units, price, price_cents, spec]
+  - name: ConnectCustomer
+    schema: v3.ConnectCustomerInput
+    business_key: account_number
+    fields: [name, account_number, contacts, delivery_address, delivery_instructions,
+      order_confirmation_email]
+  - name: OrderGuide
+    schema: v3.ConnectCustomerAndOrderGuideInput
+    description: The list of catalog items a specific customer is allowed to order.
+relationships:
+  - from: Order
+    to: OrderItem
+    type: has_many
+    via: items
+  - from: Order
+    to: ConnectCustomer
+    type: belongs_to
+    via: customer_account_no
+  - from: OrderItem
+    to: CatalogItem
+    type: belongs_to
+    via: product_code
+  - from: InventoryItem
+    to: CatalogItem
+    type: belongs_to
+    via: product_code
+  - from: OrderGuide
+    to: ConnectCustomer
+    type: belongs_to
+    via: account_number
+  - from: OrderGuide
+    to: CatalogItem
+    type: has_many
+    via: product_code
