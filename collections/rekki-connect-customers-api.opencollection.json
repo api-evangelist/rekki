@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rekki.com Supplier catalog connect_customers API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "connect_customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates or Updates customers and their product lists on REKKI Connect.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/customers-and-product-list/connect",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates new customers or updates existing ones on your REKKI Connect customer list.\n\n**NOTE**: **the processing stops at first error**\n\n### About product lists\n**IMPORTANT**: Customers' product lists will be completely replaced by the lists you upload even if they are empty, in which case the product list for the given customer will be emptied.\n\nIf you want to update just the customer data without touching the product list, use `/integration/v3/customers/connect` instead.\n\nIn effect, the product"
+        },
+        {
+          "info": {
+            "name": "Creates or Updates customers on REKKI Connect.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/customers/connect",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new customer or update an existing one on your REKKI Connect customer list.\n\nNOTE: If you add contacts, the name is required as well as at least one of phone\nor email address.\n\nStatus:` 200 OK`\nBody: `{ \"status\": \"success\"}`\n\nStatus: `500 `\nBody: `{ \"status\": \"error\", \"error\":\"input validation failed: ...\"}`\n\n**the processing stops at first error**\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

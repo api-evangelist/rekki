@@ -1,0 +1,205 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rekki.com Supplier catalog orders API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Confirm a pending order by its reference code.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v1/orders/confirm",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Notifies the buyer that the order has been acknowledged.\n\nStatus:` 200 OK`\nBody: `{ success: true}`\n\nStatus: `400 Conflict`\nBody: `{\"error\":\"Order already confirmed\",\"order_id\":...}`\n\nStatus: `400 Not Found`\nBody: `{\"error\":\"Order not found\",\"order_id\":...}`\n\nin errors order_id denotes the order that failed to be confirmed\n\n**the processing stops at first error**\n"
+        },
+        {
+          "info": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v1/orders/list",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Orders are limited to max 30 days old (i.e. timestamp must be within 30 days).\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKe"
+        },
+        {
+          "info": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI and not marked as integrated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v1/orders/list_not_integrated",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all orders placed for the supplier that were placed through REKKI and not marked as integrated."
+        },
+        {
+          "info": {
+            "name": "Report failure to integrate an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v1/orders/set_error",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Report failure to integrate an order"
+        },
+        {
+          "info": {
+            "name": "Mark orders as integrated",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v1/orders/set_integrated",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Mark orders as integrated"
+        },
+        {
+          "info": {
+            "name": "Confirm a pending order by its reference code.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/orders/confirm",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Notifies the buyer that the order has been acknowledged.\n\nStatus:` 200 OK`\nBody: `{ success: true}`\n\nStatus: `400 Conflict`\nBody: `{\"error\":\"Order already confirmed\",\"order_id\":...}`\n\nStatus: `400 Not Found`\nBody: `{\"error\":\"Order not found\",\"order_id\":...}`\n\nin errors order_id denotes the order that failed to be confirmed\n\n**the processing stops at first error**\n"
+        },
+        {
+          "info": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/orders/list",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "**UPDATE TO REFLECT V3 CHANGES**\n\nOrders are limited to max 30 days old (i.e. timestamp must be within 30 days).\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained "
+        },
+        {
+          "info": {
+            "name": "Report failure to integrate an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/orders/set_error",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Report failure to integrate an order"
+        },
+        {
+          "info": {
+            "name": "Mark orders as integrated",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/orders/set_integrated",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Mark orders as integrated"
+        },
+        {
+          "info": {
+            "name": "Mark orders as integrated",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v4/orders/set_integrated",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint allows you to mark orders as integrated (success) in REKKI's records.\n\n\n                        **Payload:**\n\n\n                        - For each order, you are required to provide a `Reference ID` and an `External ID`.\n\n                        - The `Reference ID` is the REKKI order reference, i.e. **U8806513**.\n\n                        - The `External ID` is the Order ID in your system, i.e. **SO-25001**.\n\n                        - If you can not provide an `External ID`, you can"
+        },
+        {
+          "info": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v4/orders/list",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "**IMPORTANT - v4 onwards**\n\nCallers **must** use an appropriate JSON parser to parse the output. **Do not** use any sort of simple pattern matching or regular expression-based solution.\n\nThe order of fields in the JSON output is not guaranteed and REKKI may add new fields any time.\n\n**UPDATE TO REFLECT V4 CHANGES**\n\n### The output payload structure has changed:\n\n- Fields `inserted_at, inserted_at_ts, confirmed_by` were added\n  - `confirmed_by` can be null\n- Field `external_po_number` will always"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,317 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rekki.com Supplier catalog API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get catalog items for authenticated supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/integration/v1/catalog/items",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all your catalog items. Sorted by creation date, with the oldest appearing first.\nNo input parameters. Options for pagination and sorting direction may be introduced later.\nResponse is a JSON object with a data property that contains catalog items of the authenticated supplier."
+        },
+        {
+          "info": {
+            "name": "Creates or Updates an item on your catalog. If item with this product_code already exists, you can update this item. Item is looked up by product code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v1/catalog/items",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</"
+        },
+        {
+          "info": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/integration/v1/catalog/items/:id",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the item to retrieve. Item IDs are discoverable when listing items."
+              }
+            ]
+          },
+          "docs": "Lists all orders placed for the supplier that were placed through REKKI."
+        },
+        {
+          "info": {
+            "name": "Delete an item from catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/integration/v1/catalog/items/:id",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the item to retrieve. Item IDs are discoverable when listing items."
+              }
+            ]
+          },
+          "docs": "Delete an item from your catalog by its unique ID."
+        },
+        {
+          "info": {
+            "name": "Drop all existing items from the catalog and upload new ones",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v1/catalog/replace",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</"
+        },
+        {
+          "info": {
+            "name": "Update availability status for one of the items in the catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v2/catalog/items/availability",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update availability status for one of the items in the catalog"
+        },
+        {
+          "info": {
+            "name": "Update catalog stock availability for the supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/catalog/inventory",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "### This API endpoint allows to update stock availability for products in the catalog.\n\nBy associating customer accounts with specific inventory locations, suppliers restrict customers to view products that are only available in the stock at the given location.\n\nProvided stock availability details will override previous values for the specified customer accounts.\nAdditionally, if a customer account number that was previously associated with the given inventory location but is omitted from the `c"
+        },
+        {
+          "info": {
+            "name": "Get catalog items for authenticated supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/integration/v3/catalog/items",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists all your catalog items. Sorted by creation date, with the oldest appearing first.\nNo input parameters. Options for pagination and sorting direction may be introduced later.\nResponse is a JSON object with a data property that contains catalog items of the authenticated supplier."
+        },
+        {
+          "info": {
+            "name": "Creates or Updates multiple items on your catalog. If item with this product_code already exists, you can update this item. Item is looked up by product code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/catalog/items",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</"
+        },
+        {
+          "info": {
+            "name": "Update availability status for one of the items in the catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/catalog/items/availability",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update availability status for one of the items in the catalog"
+        },
+        {
+          "info": {
+            "name": "Delete items from catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/catalog/items/delete",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Delete items from the catalog by its unique IDs."
+        },
+        {
+          "info": {
+            "name": "UploadCatalogPhoto",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/catalog/items/photo",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "product_code",
+                "value": "",
+                "type": "query",
+                "description": "Product code of the item"
+              },
+              {
+                "name": "product_unit",
+                "value": "",
+                "type": "query",
+                "description": "Unit of the item"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of tags for the photo"
+              }
+            ]
+          },
+          "docs": "Upload a photo for an item in the supplier catalog"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific catalog item by its Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/integration/v3/catalog/items/:id",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the item to retrieve. Item IDs are discoverable when listing items."
+              }
+            ]
+          },
+          "docs": "Fetch a specific catalog item by its Id."
+        },
+        {
+          "info": {
+            "name": "Update the price list for the supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/catalog/pricelist",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "### This API endpoint allows to update price lists for customers.\n\nCustomer accounts can be linked to specific price lists, enabling products to be viewed and purchased at corresponding prices.\n\nProvided price list details will override previous values for the specified customer accounts.\nAdditionally, if a customer account number that was previously associated with the given price list is omitted from the `customer_account_numbers` list, this account will be unlinked from the price list.\n"
+        },
+        {
+          "info": {
+            "name": "Drop all existing items from the catalog and upload new ones",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/catalog/replace",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "### Parameters\n\n- **`id`**\nREKKI's ID to uniquely identify the catalog item (for REKKI internal reference).\nIf `id` is specified the item will be update, if not it will attempt to insert it.\n- **`product_code`**  <span style=\"font-size: 12px; font-weight: 500;\">required</span>\nProduct code for the item that maps to the supplier's catalog.\nSuppliers can modify the product code for future orders at https://supplier.rekki.com\n- **`name`**  <span style=\"font-size: 12px; font-weight: 500;\">required</"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

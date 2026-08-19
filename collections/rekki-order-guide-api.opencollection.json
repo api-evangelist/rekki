@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rekki.com Supplier catalog order-guide API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "order-guide",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve customer's order guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/integration/v3/order-guide",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "CustomerAccountNumber",
+                "value": "",
+                "type": "query",
+                "description": "Customer account number"
+              }
+            ]
+          },
+          "docs": "Retrieve customer's order guide"
+        },
+        {
+          "info": {
+            "name": "Replace customer's order guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/integration/v3/order-guide",
+            "headers": [
+              {
+                "name": "X-REKKI-Authorization-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Replace customer's order guide"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

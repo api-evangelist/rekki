@@ -1,0 +1,3332 @@
+{
+  "item": [
+    {
+      "id": "ba0fa0f1-a4bd-4173-bed9-462e6b6e1b68",
+      "name": "orders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "615cd0a0-744f-4094-be4d-d17d2885a971",
+          "name": "Confirm a pending order by its reference code.",
+          "request": {
+            "name": "Confirm a pending order by its reference code.",
+            "description": {
+              "content": "Notifies the buyer that the order has been acknowledged.\n\nStatus:` 200 OK`\nBody: `{ success: true}`\n\nStatus: `400 Conflict`\nBody: `{\"error\":\"Order already confirmed\",\"order_id\":...}`\n\nStatus: `400 Not Found`\nBody: `{\"error\":\"Order not found\",\"order_id\":...}`\n\nin errors order_id denotes the order that failed to be confirmed\n\n**the processing stops at first error**\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v1",
+                "orders",
+                "confirm"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    \"<any>\",\n    \"<any>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92f37482-17dc-4e6c-9007-b9b9da83cde7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    \"<any>\",\n    \"<any>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82524f93-6242-4c84-85ec-27b3c2be25de",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50856082-963f-422a-bd5c-b552bb9af6b3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04bb874a-8a65-4166-9622-a60c8ffc868a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "183f5407-c253-40cb-900c-a753d90001c3",
+          "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+          "request": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+            "description": {
+              "content": "Orders are limited to max 30 days old (i.e. timestamp must be within 30 days).\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will **always** get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\n## Exaple usage\n\nIn this JavaScript example, all orders are retrieved. Then it keeps pulling for new orders since the last order, every hour.\n\n  ```\n  const fetch = require(\"node-fetch\");\n\n  const sleep = function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  };\n\n  const fetch_orders = async function(token, since) {\n    let r = await fetch(\n      \"https://api.rekki.com/api/catalog/integration/list_orders_by_supplier\",\n      {\n        method: \"POST\",\n        headers: {\n          Authorization: \"Bearer \" + token,\n          \"X-REKKI-Authorization-Type\": \"supplier_api_token\",\n          \"Content-Type\": \"application/json\",\n          Accept: \"application/json\"\n        },\n        body: JSON.stringify({ since })\n      }\n    );\n    return await r.json();\n  };\n\n  const poll = async function(token, last_rekki_order_time) {\n    let last_order_reference = undefined;\n\n    while (true) {\n      console.log(\"requesting orders since \" + last_rekki_order_time);\n      let response = await fetch_orders(token, last_rekki_order_time);\n\n      for (let order of response.orders) {\n        if (order.reference == last_order_reference) {\n          // here is where we are ignoring the order we\n          // took the inserted_at_ts from\n          // but since we can have more orders in the same inserted_at_ts\n          // you can't just do since: inserted_at_ts+1\n          continue;\n        }\n        if (order.inserted_at_ts >= last_rekki_order_time) {\n          last_rekki_order_time = order.inserted_at_ts;\n          last_order_reference = order.reference;\n        }\n\n        // process(order)\n        console.log(order);\n      }\n      await sleep(3600 * 1000); // wait 1 hour\n    }\n  };\n\n  poll(\"XXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX\", parseInt((+new Date() /1000) - 3600 * 24 * 30));\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v1",
+                "orders",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"since\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ffbf6e00-99c6-4cb4-b3d2-ec33a3b33d55",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"delivery_address\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 958,\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 7411,\n          \"product_code\": \"string\",\n          \"quantity\": 7011.4574117179955,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 5095,\n          \"product_code\": \"string\",\n          \"quantity\": 7572.770532711834,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"supplier_notes\": \"string\"\n    },\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"delivery_address\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 2165,\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 4444,\n          \"product_code\": \"string\",\n          \"quantity\": 7265.956178940733,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 1940,\n          \"product_code\": \"string\",\n          \"quantity\": 9894.797581915034,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"supplier_notes\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d02ce3b1-c252-4982-9cdb-24a2551bba5b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "754a7863-301c-4517-b8e6-018f24afcb00",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c35764e8-289d-4eeb-96f5-18e4a3299725",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38625f2d-3bbe-4039-81f2-d0b6d10e4949",
+          "name": "Lists all orders placed for the supplier that were placed through REKKI and not marked as integrated.",
+          "request": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI and not marked as integrated.",
+            "description": {},
+            "url": {
+              "path": [
+                "integration",
+                "v1",
+                "orders",
+                "list_not_integrated"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"since\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "029e5e86-45a8-4d95-b2a2-bc6e844d8439",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list_not_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"delivery_address\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 1357,\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 8389,\n          \"product_code\": \"string\",\n          \"quantity\": 3819.5060003453395,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 9028,\n          \"product_code\": \"string\",\n          \"quantity\": 5810.774362400086,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"supplier_notes\": \"string\"\n    },\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"delivery_address\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 9646,\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 4687,\n          \"product_code\": \"string\",\n          \"quantity\": 8970.137324625386,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 3033,\n          \"product_code\": \"string\",\n          \"quantity\": 5978.369295151227,\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"supplier_notes\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7056a109-aeef-4338-9b1c-e59b434908ad",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list_not_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7c99514-f43e-48b4-bbb7-52bd18da1b93",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list_not_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49aefb8c-3ed0-4e54-85c3-956b81b55d6d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "list_not_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1120c36-32ba-4b01-a8cf-da78d7a1cb0d",
+          "name": "Report failure to integrate an order",
+          "request": {
+            "name": "Report failure to integrate an order",
+            "description": {},
+            "url": {
+              "path": [
+                "integration",
+                "v1",
+                "orders",
+                "set_error"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attempts\": \"<integer>\",\n  \"error\": \"<string>\",\n  \"order\": {\n    \"reference\": \"<string>\"\n  },\n  \"product_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7256285f-460a-4253-81b2-cced138a7266",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attempts\": \"<integer>\",\n  \"error\": \"<string>\",\n  \"order\": {\n    \"reference\": \"<string>\"\n  },\n  \"product_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69b5b363-54ea-45f5-9c94-f5a850817599",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attempts\": \"<integer>\",\n  \"error\": \"<string>\",\n  \"order\": {\n    \"reference\": \"<string>\"\n  },\n  \"product_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e024b812-7d0f-4cb5-9606-af3fa98f447e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attempts\": \"<integer>\",\n  \"error\": \"<string>\",\n  \"order\": {\n    \"reference\": \"<string>\"\n  },\n  \"product_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcf8a7ac-9839-4d27-b94e-90050e5ea8ff",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attempts\": \"<integer>\",\n  \"error\": \"<string>\",\n  \"order\": {\n    \"reference\": \"<string>\"\n  },\n  \"product_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "241d4845-0234-4ffe-970b-59edf1cb909e",
+          "name": "Mark orders as integrated",
+          "request": {
+            "name": "Mark orders as integrated",
+            "description": {},
+            "url": {
+              "path": [
+                "integration",
+                "v1",
+                "orders",
+                "set_integrated"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    \"<any>\",\n    \"<any>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "257e452f-04b9-4199-956c-64f4d973a06d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"affected\": 6109,\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f43f2937-42a3-4594-b83e-cfebcdcd5b4a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5cd83f3-048a-4a5c-b6ab-4e796cd3d27c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84bb5e6d-1ee4-4154-8dfe-7213cd0bc953",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v1",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c8eab96a-2b32-4066-8741-48a5a76448da",
+          "name": "Confirm a pending order by its reference code.",
+          "request": {
+            "name": "Confirm a pending order by its reference code.",
+            "description": {
+              "content": "Notifies the buyer that the order has been acknowledged.\n\nStatus:` 200 OK`\nBody: `{ success: true}`\n\nStatus: `400 Conflict`\nBody: `{\"error\":\"Order already confirmed\",\"order_id\":...}`\n\nStatus: `400 Not Found`\nBody: `{\"error\":\"Order not found\",\"order_id\":...}`\n\nin errors order_id denotes the order that failed to be confirmed\n\n**the processing stops at first error**\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "orders",
+                "confirm"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a48b0bc1-3c5c-4f91-bc6e-b25629ff9ee1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35120411-bd2b-4c99-8e64-82fd42b2d998",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"order_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5890b710-282a-4b14-a42d-1e27b9494fcd",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07d8f34b-98d6-448d-b3e6-18a60b946e24",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91bbc7ea-515e-4890-ba0b-14d4bedaf0be",
+          "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+          "request": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+            "description": {
+              "content": "**UPDATE TO REFLECT V3 CHANGES**\n\nOrders are limited to max 30 days old (i.e. timestamp must be within 30 days).\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will **always** get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\n## Example usage\n\nIn this JavaScript example, all orders are retrieved. Then it keeps pulling for new orders since the last order, every hour.\n\n  ```\n  const fetch = require(\"node-fetch\");\n\n  const sleep = function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  };\n\n  const fetch_orders = async function(token, since) {\n    let r = await fetch(\n      \"https://api.rekki.com/api/catalog/integration/list_orders_by_supplier\",\n      {\n        method: \"POST\",\n        headers: {\n          Authorization: \"Bearer \" + token,\n          \"X-REKKI-Authorization-Type\": \"supplier_api_token\",\n          \"Content-Type\": \"application/json\",\n          Accept: \"application/json\"\n        },\n        body: JSON.stringify({ since })\n      }\n    );\n    return await r.json();\n  };\n\n  const poll = async function(token, last_rekki_order_time) {\n    let last_order_reference = undefined;\n\n    while (true) {\n      console.log(\"requesting orders since \" + last_rekki_order_time);\n      let response = await fetch_orders(token, last_rekki_order_time.toISOString());\n\n      for (let order of response.orders) {\n        if (order.reference == last_order_reference) {\n          // here is where we are ignoring the order we\n          // took the inserted_at from\n          // but since we can have more orders in the same inserted_at\n          // you can't just do since: inserted_at + 1 second\n          continue;\n        }\n        if (+new Date(order.inserted_at) >= +last_rekki_order_time) {\n          last_rekki_order_time = order.inserted_at;\n          last_order_reference = order.reference;\n        }\n\n        // process(order)\n        console.log(order);\n      }\n      await sleep(3600 * 1000); // wait 1 hour\n    }\n  };\n\n  let startDate = new Date()\n  startDate.setDate(startDate.getDate() - 30)\n  poll(\"XXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX\", startDate)\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "orders",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"extra_item_fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"show_previous_attempts\": false,\n  \"since\": \"<string>\",\n  \"skip_integrated\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4e24daea-ac95-47c6-aed8-98d675650ea5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"extra_item_fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"show_previous_attempts\": false,\n  \"since\": \"2006-01-02T15:04:05-07:00\",\n  \"skip_integrated\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"delivery_address\": {\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"country\": \"string\",\n        \"postcode\": \"string\"\n      },\n      \"delivery_instructions\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 3999,\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 4675,\n          \"product_code\": \"string\",\n          \"quantity\": 2419.136603685139,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 3645,\n          \"product_code\": \"string\",\n          \"quantity\": 6875.966259667253,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"supplier_notes\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"delivery_address\": {\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"country\": \"string\",\n        \"postcode\": \"string\"\n      },\n      \"delivery_instructions\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 5551,\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 922,\n          \"product_code\": \"string\",\n          \"quantity\": 4256.732158426277,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 2984,\n          \"product_code\": \"string\",\n          \"quantity\": 873.6723458111984,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"supplier_notes\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fd5e328-f44a-4a8d-a02e-ec121abfa3ee",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"extra_item_fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"show_previous_attempts\": false,\n  \"since\": \"2006-01-02T15:04:05-07:00\",\n  \"skip_integrated\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2a0ff5c-86a1-4d43-8de5-289835a0fcd9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"extra_item_fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"show_previous_attempts\": false,\n  \"since\": \"2006-01-02T15:04:05-07:00\",\n  \"skip_integrated\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acfc4497-c219-4c41-aa33-cb98f5b39ca8",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"extra_item_fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"show_previous_attempts\": false,\n  \"since\": \"2006-01-02T15:04:05-07:00\",\n  \"skip_integrated\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfb9964c-7a46-40c9-8d59-746d6c6901ce",
+          "name": "Report failure to integrate an order",
+          "request": {
+            "name": "Report failure to integrate an order",
+            "description": {},
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "orders",
+                "set_error"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    },\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f78ab162-25e3-4bc1-8eaf-8a97aa1dabbf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    },\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aaa7b21-4e7d-4e7f-8bc2-6858916a1de7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    },\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"order_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "958d8470-0899-4fd1-90b2-75ff9b78a4a6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    },\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d966cdee-b1c1-4c4e-9e1f-48d8aeae89c6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_error"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    },\n    {\n      \"attempts\": \"<integer>\",\n      \"error\": \"<string>\",\n      \"product_code\": \"<string>\",\n      \"reference\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a8674ba-df34-43a4-ae50-3126bdcb0860",
+          "name": "Mark orders as integrated",
+          "request": {
+            "name": "Mark orders as integrated",
+            "description": {},
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "orders",
+                "set_integrated"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "63ab123c-e2ad-4ff9-8ef7-b5b5baa74804",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"affected\": 6109,\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "714e735e-0dee-44d2-921f-040c161c166f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd6a842b-d039-4141-8335-d5ef874d4124",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ef82785-8b37-4f57-a82d-87aad65ee646",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "334260d6-b7bb-466f-8bad-1b3f40944e2e",
+          "name": "Mark orders as integrated",
+          "request": {
+            "name": "Mark orders as integrated",
+            "description": {
+              "content": "This endpoint allows you to mark orders as integrated (success) in REKKI's records.\n\n\n                        **Payload:**\n\n\n                        - For each order, you are required to provide a `Reference ID` and an `External ID`.\n\n                        - The `Reference ID` is the REKKI order reference, i.e. **U8806513**.\n\n                        - The `External ID` is the Order ID in your system, i.e. **SO-25001**.\n\n                        - If you can not provide an `External ID`, you can pass the same value used for the `Reference ID`.\n\n\n\n                        **200 Response:**\n\n\n                        - Response will contain separate lists for `updated`, `failed`, and `skipped`.\n\n                        - Each order will also have a list of `messages` with details about the attempt.\n                ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v4",
+                "orders",
+                "set_integrated"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    },\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94a056ed-7127-49b5-967b-e930b7b47275",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    },\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"count\": 8375,\n  \"updated\": [\n    {\n      \"reference_id\": \"string\",\n      \"external_id\": \"string\",\n      \"messages\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"reference_id\": \"string\",\n      \"external_id\": \"string\",\n      \"messages\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"skipped\": [\n    {\n      \"reference_id\": \"string\",\n      \"external_id\": \"string\",\n      \"messages\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"reference_id\": \"string\",\n      \"external_id\": \"string\",\n      \"messages\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"failed\": [\n    {\n      \"reference_id\": \"string\",\n      \"external_id\": \"string\",\n      \"messages\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"reference_id\": \"string\",\n      \"external_id\": \"string\",\n      \"messages\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e556794-4345-42a7-8dfa-a38d54e34bb0",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    },\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "688ffdba-a6e1-417d-bb1e-6a6b0f3d2a73",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    },\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f17f8a43-8191-418b-a3ed-1fde21745674",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "set_integrated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orders\": [\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    },\n    {\n      \"reference_id\": \"<string>\",\n      \"external_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "87f8732a-a427-43a1-bf84-53cf0a376e1b",
+          "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+          "request": {
+            "name": "Lists all orders placed for the supplier that were placed through REKKI.",
+            "description": {
+              "content": "**IMPORTANT - v4 onwards**\n\nCallers **must** use an appropriate JSON parser to parse the output. **Do not** use any sort of simple pattern matching or regular expression-based solution.\n\nThe order of fields in the JSON output is not guaranteed and REKKI may add new fields any time.\n\n**UPDATE TO REFLECT V4 CHANGES**\n\n### The output payload structure has changed:\n\n- Fields `inserted_at, inserted_at_ts, confirmed_by` were added\n  - `confirmed_by` can be null\n- Field `external_po_number` will always be present in the output, but can be null\n- `size` field was added to the order items. It was previously obtainable via an optional input parameter.\n- An `integration` field has been added, containing two nested fields:\n  - `status`, which can be `pending`, `failed` or `success`\n  - `integrated_at`, which will show the timestamp of a successful integration or be null otherwise.\n\nIn general, all fields will always be present, though certain fields can have null values. Check each field specification for details.\n\n### The input payload structure has changed:\n\n- Removed the `skip_integrated`, `show_previous_attempts` and `extra_item_fields` fields.\n- Added a `filter` field.\n  - currently has a nested `integration_statuses` field, which can be used to specify the statuses of the orders to be listed.\n  - by default, no filter is applied.\n\nOrders are limited to 1 month old at a maximum, i.e. if `since` contains an older timestamp, it will be disregarded and a limit of 1 month will be used.\n\n**RELEVANT INFORMATION FROM PREVIOUS VERSIONS**\n\nWe recommend polling for orders by setting the new request timestamp to the time of the last successful request.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will always get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\nAfter you start using the API, you should request orders since last received order's inserted_at_ts, since the API returns orders created >= of the requested timestamp, you will **always** get at order from which you took the timestamp in the response. This will be explained again in the provided example.\n\nKeep in mind that since you can have more than one order per since, you must not do since: last_order.inserted_at_ts + 1, but keep the last order you received's reference and ignore the duplicate.\n\n## Example usage\n\nIn this JavaScript example, all orders are retrieved. Then it keeps pulling for new orders since the last order, every hour.\n\n  ```\n  const fetch = require(\"node-fetch\");\n\n  const sleep = function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  };\n\n  const fetch_orders = async function(token, since) {\n    let r = await fetch(\n      \"https://api.rekki.com/api/integration/v4/orders/list\",\n      {\n        method: \"POST\",\n        headers: {\n          Authorization: \"Bearer \" + token,\n          \"X-REKKI-Authorization-Type\": \"supplier_api_token\",\n          \"Content-Type\": \"application/json\",\n          Accept: \"application/json\"\n        },\n        body: JSON.stringify({ since })\n      }\n    );\n    return await r.json();\n  };\n\n  const poll = async function(token, last_rekki_order_time) {\n    let last_order_reference = undefined;\n\n    while (true) {\n      console.log(\"requesting orders since \" + last_rekki_order_time);\n      let response = await fetch_orders(token, last_rekki_order_time.toISOString());\n\n      for (let order of response.orders) {\n        if (order.reference == last_order_reference) {\n          // here is where we are ignoring the order we\n          // took the inserted_at from\n          // but since we can have more orders in the same inserted_at\n          // you can't just do since: inserted_at + 1 second\n          continue;\n        }\n        if (+new Date(order.inserted_at) >= +last_rekki_order_time) {\n          last_rekki_order_time = order.inserted_at;\n          last_order_reference = order.reference;\n        }\n\n        // process(order)\n        console.log(order);\n      }\n      await sleep(3600 * 1000); // wait 1 hour\n    }\n  };\n\n  let startDate = new Date()\n  startDate.setDate(startDate.getDate() - 30)\n  poll(\"XXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX\", startDate)\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v4",
+                "orders",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enable_oob\": \"<boolean>\",\n  \"filter\": {\n    \"integration_statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"since\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99c3aea0-ad2c-445d-a3fc-c8d4fb16b758",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enable_oob\": \"<boolean>\",\n  \"filter\": {\n    \"integration_statuses\": [\n      \"pending\",\n      \"failed\"\n    ]\n  },\n  \"since\": \"2006-01-02T15:04:05-07:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"confirmed_by\": \"string\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"customer_department\": \"string\",\n      \"delivery_address\": {\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"country\": \"string\",\n        \"postcode\": \"string\"\n      },\n      \"delivery_instructions\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 2927,\n      \"integration\": {\n        \"integrated_at\": \"string\",\n        \"status\": \"string\"\n      },\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 5960,\n          \"product_code\": \"string\",\n          \"quantity\": 4570.194579883981,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 9901,\n          \"product_code\": \"string\",\n          \"quantity\": 5690.541742243344,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"rekki_connect\": {\n        \"original_email_subject\": \"string\"\n      },\n      \"supplier_notes\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"updated_at\": \"string\",\n      \"updated_at_ts\": 8853\n    },\n    {\n      \"confirmed_at\": \"2019-08-12T12:20:10-07:00\",\n      \"confirmed_by\": \"string\",\n      \"contact_email\": \"string\",\n      \"contact_info\": \"string\",\n      \"contact_name\": \"string\",\n      \"customer_account_no\": \"string\",\n      \"customer_department\": \"string\",\n      \"delivery_address\": {\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"country\": \"string\",\n        \"postcode\": \"string\"\n      },\n      \"delivery_instructions\": \"string\",\n      \"delivery_on\": \"2020-06-01\",\n      \"external_po_number\": \"string\",\n      \"inserted_at\": \"string\",\n      \"inserted_at_ts\": 1944,\n      \"integration\": {\n        \"integrated_at\": \"string\",\n        \"status\": \"string\"\n      },\n      \"items\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 3695,\n          \"product_code\": \"string\",\n          \"quantity\": 3220.90324835283,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"price\": \"string\",\n          \"price_cents\": 8341,\n          \"product_code\": \"string\",\n          \"quantity\": 4708.872982159755,\n          \"size\": \"string\",\n          \"spec\": \"string\",\n          \"units\": \"string\"\n        }\n      ],\n      \"location_name\": \"string\",\n      \"notes\": \"string\",\n      \"reference\": \"string\",\n      \"rekki_connect\": {\n        \"original_email_subject\": \"string\"\n      },\n      \"supplier_notes\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"updated_at\": \"string\",\n      \"updated_at_ts\": 8255\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a7b4b96-2e90-49e2-8354-08f33330aba9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enable_oob\": \"<boolean>\",\n  \"filter\": {\n    \"integration_statuses\": [\n      \"pending\",\n      \"failed\"\n    ]\n  },\n  \"since\": \"2006-01-02T15:04:05-07:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c4af3a1-efde-44ad-90cc-3b7beaa1f79e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enable_oob\": \"<boolean>\",\n  \"filter\": {\n    \"integration_statuses\": [\n      \"pending\",\n      \"failed\"\n    ]\n  },\n  \"since\": \"2006-01-02T15:04:05-07:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4760cc64-8b31-46df-8463-7773669f9f25",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v4",
+                    "orders",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enable_oob\": \"<boolean>\",\n  \"filter\": {\n    \"integration_statuses\": [\n      \"pending\",\n      \"failed\"\n    ]\n  },\n  \"since\": \"2006-01-02T15:04:05-07:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.rekki.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "957d9863-1bc4-4405-aa8e-45b9164e6d52",
+    "name": "Rekki.com Supplier catalog orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The base URL for all API endpoints is https://api.rekki.com/api\n\nApi key value consists of word Bearer together with api key that you can get from integrations@rekki.com\n\n\nContact Support:\n Email: integrations@rekki.com",
+      "type": "text/plain"
+    }
+  }
+}

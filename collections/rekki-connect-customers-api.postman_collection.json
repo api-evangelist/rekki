@@ -1,0 +1,658 @@
+{
+  "item": [
+    {
+      "id": "5a723150-80e8-4ef5-9f1a-63b24451af62",
+      "name": "connect_customers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fd13463d-b475-4fa7-9b0b-0f0da1ae0d65",
+          "name": "Creates or Updates customers and their product lists on REKKI Connect.",
+          "request": {
+            "name": "Creates or Updates customers and their product lists on REKKI Connect.",
+            "description": {
+              "content": "Creates new customers or updates existing ones on your REKKI Connect customer list.\n\n**NOTE**: **the processing stops at first error**\n\n### About product lists\n**IMPORTANT**: Customers' product lists will be completely replaced by the lists you upload even if they are empty, in which case the product list for the given customer will be emptied.\n\nIf you want to update just the customer data without touching the product list, use `/integration/v3/customers/connect` instead.\n\nIn effect, the product list update behaviour is equivalent to this:\n- Product matching is done via code and unit.\n- New products in the upload will be added to the customer's product list.\n- Items in the upload that already exist in the customer's product list will have name and size updated, if there are changes.\n- Items that already exist in the customer's product list but are not in the upload will be removed.\n\n\n### About contacts\nNOTE: If you add contacts, the name is required as well as at least one of phone\nor email address.\n\nStatus:` 200 OK`\nBody: `{ \"status\": \"success\"}`\n\nStatus: `500 `\nBody: `{ \"status\": \"error\", \"error\":\"input validation failed: ...\"}`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "customers-and-product-list",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\",\n      \"product_list\": [\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        },\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "69977a48-e727-45d1-a782-bb4864732b05",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers-and-product-list",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\",\n      \"product_list\": [\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        },\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"num_customers_created\": 2648,\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29f77eba-fc4c-4d64-ae25-385d826c73ba",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers-and-product-list",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\",\n      \"product_list\": [\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        },\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0841eb9b-476e-4c6c-a51b-08a403b2cc2d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers-and-product-list",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\",\n      \"product_list\": [\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        },\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "799ac1de-ddec-4e7e-bd69-ca9a25a7090c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers-and-product-list",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\",\n      \"product_list\": [\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        },\n        {\n          \"code\": \"<string>\",\n          \"name\": \"<string>\",\n          \"size\": \"<string>\",\n          \"unit\": \"<string>\",\n          \"spec\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73badd89-e9e8-432f-a930-a973217fff2e",
+          "name": "Creates or Updates customers on REKKI Connect.",
+          "request": {
+            "name": "Creates or Updates customers on REKKI Connect.",
+            "description": {
+              "content": "Create a new customer or update an existing one on your REKKI Connect customer list.\n\nNOTE: If you add contacts, the name is required as well as at least one of phone\nor email address.\n\nStatus:` 200 OK`\nBody: `{ \"status\": \"success\"}`\n\nStatus: `500 `\nBody: `{ \"status\": \"error\", \"error\":\"input validation failed: ...\"}`\n\n**the processing stops at first error**\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "customers",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    },\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "912039e3-fed4-4073-ae34-273445aeed14",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    },\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"num_customers_created\": 2648,\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18261697-9589-4605-b635-a2c9a9b3b88d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    },\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adf7c730-a189-4527-b8ab-54697e34f7ff",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    },\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ae0fe2f-c41b-4d5e-ba5a-c7bddd8752fc",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "customers",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customers\": [\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    },\n    {\n      \"account_number\": \"<string>\",\n      \"delivery_address\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contacts\": [\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"email\": \"<string>\",\n          \"phone\": \"<string>\"\n        }\n      ],\n      \"delivery_instructions\": \"<string>\",\n      \"order_confirmation_email\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.rekki.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ac1888d9-a31a-42df-bf8d-fd8f5bf59fc2",
+    "name": "Rekki.com Supplier catalog connect_customers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The base URL for all API endpoints is https://api.rekki.com/api\n\nApi key value consists of word Bearer together with api key that you can get from integrations@rekki.com\n\n\nContact Support:\n Email: integrations@rekki.com",
+      "type": "text/plain"
+    }
+  }
+}

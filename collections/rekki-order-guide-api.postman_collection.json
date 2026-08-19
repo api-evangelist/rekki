@@ -1,0 +1,624 @@
+{
+  "item": [
+    {
+      "id": "0fcaeac2-b613-474e-969b-1025b76dcdf9",
+      "name": "order-guide",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58950930-e6b8-41bb-8247-364b03d106b9",
+          "name": "Retrieve customer's order guide",
+          "request": {
+            "name": "Retrieve customer's order guide",
+            "description": {},
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "order-guide"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "CustomerAccountNumber",
+                  "value": "<string>",
+                  "description": "(Required) Customer account number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0412f7f5-eaac-4966-8c3a-6dc60991c9d0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "CustomerAccountNumber",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer_account_number\": \"REKK1\",\n  \"products\": [\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false,\n      \"deleted\": false\n    },\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false,\n      \"deleted\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7465a3ae-a802-447c-b8d7-f46f68062c8d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "CustomerAccountNumber",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e192125b-6d9c-459b-bd1a-cabea1318712",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "CustomerAccountNumber",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "140d6964-f139-44dc-97c0-5d4ba201fb95",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "CustomerAccountNumber",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccbcc417-01bc-4251-b65a-b36952a5c7ef",
+          "name": "Replace customer's order guide",
+          "request": {
+            "name": "Replace customer's order guide",
+            "description": {},
+            "url": {
+              "path": [
+                "integration",
+                "v3",
+                "order-guide"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Required header",
+                "key": "X-REKKI-Authorization-Type",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_account_number\": \"<string>\",\n  \"products\": [\n    {\n      \"name\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"units\": \"<string>\",\n      \"price\": \"<string>\",\n      \"archived\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"units\": \"<string>\",\n      \"price\": \"<string>\",\n      \"archived\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ae7ba94-482d-4fd1-925b-56ca624f586a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_account_number\": \"REKK1\",\n  \"products\": [\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    },\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer_account_number\": \"REKK1\",\n  \"products\": [\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false,\n      \"deleted\": false\n    },\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false,\n      \"deleted\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36847a4f-9f2f-45fc-8483-c7c1075422d1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_account_number\": \"REKK1\",\n  \"products\": [\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    },\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb80b0ff-01b1-4a5f-82a5-1663eb9db459",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_account_number\": \"REKK1\",\n  \"products\": [\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    },\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11a67625-0224-4b97-8b93-7be88ef8c0b3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration",
+                    "v3",
+                    "order-guide"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Required header",
+                    "key": "X-REKKI-Authorization-Type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_account_number\": \"REKK1\",\n  \"products\": [\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    },\n    {\n      \"name\": \"Blueberries\",\n      \"reference\": \"BLBP\",\n      \"units\": \"Pint\",\n      \"price\": \"299\",\n      \"archived\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.rekki.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5cd8845f-9fc1-49df-a755-a577245652d2",
+    "name": "Rekki.com Supplier catalog order-guide API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The base URL for all API endpoints is https://api.rekki.com/api\n\nApi key value consists of word Bearer together with api key that you can get from integrations@rekki.com\n\n\nContact Support:\n Email: integrations@rekki.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -110,3 +110,9 @@ tools:
 - name: MarkOrdersIntegratedV4
   description: Mark orders as integrated
   source_operation: openapi/rekki-supplier-api-openapi-original.json#MarkOrdersIntegratedV4
+deployment:
+  mode: none
+  verified: derived
+  tools: 32
+  checked: '2026-08-12'
+  source: catalog MCP census
