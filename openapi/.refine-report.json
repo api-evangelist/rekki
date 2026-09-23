@@ -1,11 +1,7 @@
 {
   "provider": "rekki",
   "sources": [
-    "rekki-catalog-api-openapi.yml",
-    "rekki-connect-customers-api-openapi.yml",
-    "rekki-general-api-openapi.yml",
-    "rekki-order-guide-api-openapi.yml",
-    "rekki-orders-api-openapi.yml"
+    "_original/rekki-supplier-api-openapi-original.json"
   ],
   "outputs": [
     "rekki-catalog-api-openapi.yml",
@@ -17,12 +13,23 @@
   "archived": [],
   "errors": [],
   "warnings": [
-    "rekki-catalog-api-openapi.yml: info.version missing",
-    "rekki-connect-customers-api-openapi.yml: info.version missing",
-    "rekki-general-api-openapi.yml: info.version missing",
-    "rekki-order-guide-api-openapi.yml: info.version missing",
-    "rekki-orders-api-openapi.yml: info.version missing"
+    "rekki-supplier-api-openapi-original.json: info.version missing"
   ],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "rekki-supplier-api-openapi-original.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "rekki-supplier-api-openapi-original.json: declared missing tag: catalog",
+    "rekki-supplier-api-openapi-original.json: declared missing tag: connect_customers",
+    "rekki-supplier-api-openapi-original.json: declared missing tag: general",
+    "rekki-supplier-api-openapi-original.json: declared missing tag: order-guide",
+    "rekki-supplier-api-openapi-original.json: declared missing tag: orders",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "rekki-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rekki-connect-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rekki-general-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rekki-order-guide-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rekki-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
