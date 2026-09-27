@@ -1108,33 +1108,137 @@ paths:
         required: true
 components:
   schemas:
-    catalog.OrderCutoffTimes:
+    v3.PriceListItem:
       type: object
       properties:
-        fri:
-          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+        price_cents:
+          description: The price of the product in cents.
           type: integer
-        mon:
-          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
-          type: integer
-        thu:
-          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
-          type: integer
-        tue:
-          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
-          type: integer
-        wed:
-          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
-          type: integer
-    v3.SetStockStatusInput:
+          example: 299
+        product_code:
+          description: The unique code for the product.
+          type: string
+          example: '126372'
+        unit:
+          description: The unit of measurement for the product.
+          type: string
+          example: kg
+    v3.ReplaceCatalogInput:
       type: object
-      required:
-      - items
       properties:
-        items:
+        data:
+          description: items to insert
           type: array
           items:
-            $ref: '#/components/schemas/v3.StockItemState'
+            $ref: '#/components/schemas/v3.APISupplierCatalogItem'
+    v3.AvailabilityErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.AvailabilityError'
+    v3.SuccessConfirmation:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+    v3.UpdateSuccess:
+      type: object
+      properties:
+        affected:
+          description: number of items actually updated
+          type: integer
+        success:
+          type: boolean
+          example: true
+    v3.Allergens:
+      type: object
+      properties:
+        symptoms:
+          description: List of symptoms for the allergy.
+          type: array
+          items:
+            type: string
+        type:
+          description: Type of allergy. For example "contains peanuts" or "may contain peanuts".
+          type: string
+    main.GenericErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    v3.InventoryCatalogItem:
+      type: object
+      properties:
+        availability:
+          description: 'Product Availability
+
+            * in_stock
+
+            * out_of_stock'
+          type: string
+          example: in_stock
+        product_code:
+          description: The unique code for the product.
+          type: string
+          example: '126372'
+        unit:
+          description: The unit of measurement for the product.
+          type: string
+          example: kg
+    main.CatalogItems:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/main.APISupplierCatalogItem'
+    v3.AvailabilityError:
+      type: object
+      properties:
+        error:
+          type: string
+        item:
+          $ref: '#/components/schemas/v3.StockItemState'
+    main.UpdateSuccess:
+      type: object
+      properties:
+        affected:
+          description: number of items actually updated
+          type: integer
+        success:
+          type: boolean
+          example: true
+    v3.DeleteCatalogItemsInput:
+      type: object
+      properties:
+        items:
+          description: Array of catalog item ids to delete
+          type: array
+          items:
+            type: integer
+    v3.UpdatePriceListInput:
+      type: object
+      properties:
+        customer_account_numbers:
+          description: An array of customer account numbers to be linked to the price list.
+          type: array
+          items:
+            type: string
+          example:
+          - ACC_NR_1
+          - ACC_NR_2
+        items:
+          description: An array of product pricing details for the price list.
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.PriceListItem'
+        pricelist_name:
+          description: The name of the price list to be updated or created.
+          type: string
+          example: Standard
     main.SetStockStatusInput:
       type: object
       required:
@@ -1144,6 +1248,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/main.StockItemState'
+    main.APISupplierCatalogUnit:
+      type: object
+      properties:
+        price_cents:
+          description: 'The order price in cents for the item per unit.
+
+            For example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.'
+          type: integer
+        stock_count:
+          description: The number of items in stock for the related unit.
+          type: integer
+        unit:
+          description: A unit that the item can be ordered in.
+          type: string
     v3.UpdateCatalogInventoryInput:
       type: object
       properties:
@@ -1171,30 +1289,70 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v3.APISupplierCatalogItem'
-    v3.PriceListItem:
+    main.StockItemState:
       type: object
+      required:
+      - availability
+      - product_code
       properties:
-        price_cents:
-          description: The price of the product in cents.
-          type: integer
-          example: 299
+        availability:
+          description: only possible values are `in_stock` or `out_of_stock`
+          type: string
         product_code:
-          description: The unique code for the product.
           type: string
-          example: '126372'
-        unit:
-          description: The unit of measurement for the product.
-          type: string
-          example: kg
-    main.UpdateSuccess:
+    main.APISupplierCatalogItem:
       type: object
       properties:
-        affected:
-          description: number of items actually updated
+        allergens:
+          description: List of allergens for the item, if any.
+          type: array
+          items:
+            $ref: '#/components/schemas/catalog.Allergen'
+        availability:
+          description: Availability status of the item. Defaults to in_stock.
+          type: string
+        currency:
+          description: Currency code for the price. In ISO 4217 three-letter format. Defaults to GBP.
+          type: string
+        description:
+          description: Product description
+          type: string
+        id:
+          description: REKKI's ID to uniquely identify the catalog item (for REKKI internal reference).
           type: integer
-        success:
-          type: boolean
-          example: true
+        name:
+          description: Item name as would be defined on the customer's product list.
+          type: string
+        order_cutoff_times:
+          description: Cutt-off times are the minimum amount of time before delivery when the item can still be ordered.
+          $ref: '#/components/schemas/catalog.OrderCutoffTimes'
+        product_code:
+          description: 'Product code for the item that maps to the supplier''s catalog.
+
+            Suppliers can modify the product code for future orders at https://supplier.rekki.com'
+          type: string
+        replacement_products:
+          description: List of product codes for alternative items when this item is not available.
+          type: array
+          items:
+            type: string
+        seasonality:
+          description: List of date ranges when the item is in-season.
+          type: array
+          items:
+            $ref: '#/components/schemas/catalog.Seasonality'
+        units_prices:
+          description: List of units and their prices that the item can be ordered in.
+          type: array
+          items:
+            $ref: '#/components/schemas/main.APISupplierCatalogUnit'
+    v3.CatalogItems:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.APISupplierCatalogItem'
     v3.APISupplierCatalogItem:
       type: object
       properties:
@@ -1243,100 +1401,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v3.APISupplierCatalogUnit'
-    catalog.Allergen:
-      type: object
-      properties:
-        symptoms:
-          description: List of symptoms for the allergy.
-          type: array
-          items:
-            type: string
-        type:
-          description: Type of allergy. For example "contains peanuts" or "may contain peanuts".
-          type: string
-    v3.UpdatePriceListInput:
-      type: object
-      properties:
-        customer_account_numbers:
-          description: An array of customer account numbers to be linked to the price list.
-          type: array
-          items:
-            type: string
-          example:
-          - ACC_NR_1
-          - ACC_NR_2
-        items:
-          description: An array of product pricing details for the price list.
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.PriceListItem'
-        pricelist_name:
-          description: The name of the price list to be updated or created.
-          type: string
-          example: Standard
-    v3.ReplaceCatalogInput:
-      type: object
-      properties:
-        data:
-          description: items to insert
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.APISupplierCatalogItem'
-    v3.InventoryCatalogItem:
-      type: object
-      properties:
-        availability:
-          description: 'Product Availability
-
-            * in_stock
-
-            * out_of_stock'
-          type: string
-          example: in_stock
-        product_code:
-          description: The unique code for the product.
-          type: string
-          example: '126372'
-        unit:
-          description: The unit of measurement for the product.
-          type: string
-          example: kg
-    v3.Allergens:
-      type: object
-      properties:
-        symptoms:
-          description: List of symptoms for the allergy.
-          type: array
-          items:
-            type: string
-        type:
-          description: Type of allergy. For example "contains peanuts" or "may contain peanuts".
-          type: string
-    v3.Seasonality:
-      type: object
-      properties:
-        end_date:
-          description: The end date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
-          type: string
-        start_date:
-          description: The start date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
-          type: string
-    v3.GenericErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    v3.StockItemState:
-      type: object
-      required:
-      - availability
-      - product_code
-      properties:
-        availability:
-          description: only possible values are `in_stock` or `out_of_stock`
-          type: string
-        product_code:
-          type: string
     catalog.Seasonality:
       type: object
       properties:
@@ -1346,72 +1410,7 @@ components:
         start_date:
           description: The start date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
           type: string
-    main.CatalogItems:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/main.APISupplierCatalogItem'
-    v3.UploadCatalogPhotoResponse:
-      type: object
-      properties:
-        linked:
-          type: boolean
-          example: true
-        photo_id:
-          type: string
-          example: d3e4f5a6-7b8c-9d0e-1f2a3b4c5d6e7
-    v3.UpdatePriceListOutput:
-      type: object
-      properties:
-        customer_account_numbers:
-          description: An array of customer account numbers linked to the price list.
-          type: array
-          items:
-            type: string
-          example:
-          - ACC_NR_1
-          - ACC_NR_2
-        pricelist_name:
-          description: The name of the price list to be updated or created.
-          type: string
-          example: Standard
-        unlinked_customer_account_numbers:
-          description: An array of customer account numbers unlinked from the price list.
-          type: array
-          items:
-            type: string
-          example:
-          - ACC_NR_0
-    v3.AvailabilityErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.AvailabilityError'
-    v3.UpdateSuccess:
-      type: object
-      properties:
-        affected:
-          description: number of items actually updated
-          type: integer
-        success:
-          type: boolean
-          example: true
-    main.StockItemState:
-      type: object
-      required:
-      - availability
-      - product_code
-      properties:
-        availability:
-          description: only possible values are `in_stock` or `out_of_stock`
-          type: string
-        product_code:
-          type: string
-    v3.OrderCutoffTimes:
+    catalog.OrderCutoffTimes:
       type: object
       properties:
         fri:
@@ -1429,71 +1428,11 @@ components:
         wed:
           description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
           type: integer
-    v3.APISupplierCatalogUnit:
-      type: object
-      properties:
-        price_cents:
-          description: 'The order price in cents for the item per unit.
-
-            For example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.'
-          type: integer
-        size:
-          type: string
-        stock_count:
-          description: The number of items in stock for the related unit.
-          type: integer
-        unit:
-          description: A unit that the item can be ordered in.
-          type: string
-    main.ReplaceCatalogInput:
-      type: object
-      properties:
-        data:
-          description: items to insert
-          type: array
-          items:
-            $ref: '#/components/schemas/main.APISupplierCatalogItem'
-    v3.AvailabilityError:
+    v3.GenericErrorResponse:
       type: object
       properties:
         error:
           type: string
-        item:
-          $ref: '#/components/schemas/v3.StockItemState'
-    main.GenericErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    main.APISupplierCatalogUnit:
-      type: object
-      properties:
-        price_cents:
-          description: 'The order price in cents for the item per unit.
-
-            For example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.'
-          type: integer
-        stock_count:
-          description: The number of items in stock for the related unit.
-          type: integer
-        unit:
-          description: A unit that the item can be ordered in.
-          type: string
-    v3.DeleteCatalogItemsInput:
-      type: object
-      properties:
-        items:
-          description: Array of catalog item ids to delete
-          type: array
-          items:
-            type: integer
-    v3.CatalogItems:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.APISupplierCatalogItem'
     v3.UpdateInventoryCatalogOutput:
       type: object
       properties:
@@ -1516,64 +1455,125 @@ components:
             type: string
           example:
           - ACC_NR_0
-    main.APISupplierCatalogItem:
+    v3.APISupplierCatalogUnit:
       type: object
       properties:
-        allergens:
-          description: List of allergens for the item, if any.
-          type: array
-          items:
-            $ref: '#/components/schemas/catalog.Allergen'
-        availability:
-          description: Availability status of the item. Defaults to in_stock.
-          type: string
-        currency:
-          description: Currency code for the price. In ISO 4217 three-letter format. Defaults to GBP.
-          type: string
-        description:
-          description: Product description
-          type: string
-        id:
-          description: REKKI's ID to uniquely identify the catalog item (for REKKI internal reference).
-          type: integer
-        name:
-          description: Item name as would be defined on the customer's product list.
-          type: string
-        order_cutoff_times:
-          description: Cutt-off times are the minimum amount of time before delivery when the item can still be ordered.
-          $ref: '#/components/schemas/catalog.OrderCutoffTimes'
-        product_code:
-          description: 'Product code for the item that maps to the supplier''s catalog.
+        price_cents:
+          description: 'The order price in cents for the item per unit.
 
-            Suppliers can modify the product code for future orders at https://supplier.rekki.com'
+            For example, a currency of GBP with unit 5L and price 850 means a 5L item can be ordered for £8.50.'
+          type: integer
+        size:
           type: string
-        replacement_products:
-          description: List of product codes for alternative items when this item is not available.
+        stock_count:
+          description: The number of items in stock for the related unit.
+          type: integer
+        unit:
+          description: A unit that the item can be ordered in.
+          type: string
+    v3.UpdatePriceListOutput:
+      type: object
+      properties:
+        customer_account_numbers:
+          description: An array of customer account numbers linked to the price list.
           type: array
           items:
             type: string
-        seasonality:
-          description: List of date ranges when the item is in-season.
+          example:
+          - ACC_NR_1
+          - ACC_NR_2
+        pricelist_name:
+          description: The name of the price list to be updated or created.
+          type: string
+          example: Standard
+        unlinked_customer_account_numbers:
+          description: An array of customer account numbers unlinked from the price list.
           type: array
           items:
-            $ref: '#/components/schemas/catalog.Seasonality'
-        units_prices:
-          description: List of units and their prices that the item can be ordered in.
+            type: string
+          example:
+          - ACC_NR_0
+    v3.SetStockStatusInput:
+      type: object
+      required:
+      - items
+      properties:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/main.APISupplierCatalogUnit'
+            $ref: '#/components/schemas/v3.StockItemState'
+    main.ReplaceCatalogInput:
+      type: object
+      properties:
+        data:
+          description: items to insert
+          type: array
+          items:
+            $ref: '#/components/schemas/main.APISupplierCatalogItem'
+    catalog.Allergen:
+      type: object
+      properties:
+        symptoms:
+          description: List of symptoms for the allergy.
+          type: array
+          items:
+            type: string
+        type:
+          description: Type of allergy. For example "contains peanuts" or "may contain peanuts".
+          type: string
     main.SuccessConfirmation:
       type: object
       properties:
         success:
           type: boolean
           example: true
-    v3.SuccessConfirmation:
+    v3.OrderCutoffTimes:
       type: object
       properties:
-        success:
+        fri:
+          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+          type: integer
+        mon:
+          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+          type: integer
+        thu:
+          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+          type: integer
+        tue:
+          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+          type: integer
+        wed:
+          description: Minimum amount of time, in hours, that an item needs to be ordered in advance of delivery for the given day.
+          type: integer
+    v3.Seasonality:
+      type: object
+      properties:
+        end_date:
+          description: The end date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
+          type: string
+        start_date:
+          description: The start date when the item is in season. In ISO 8601 calendar date format YYYY-MM-DD.
+          type: string
+    v3.UploadCatalogPhotoResponse:
+      type: object
+      properties:
+        linked:
           type: boolean
           example: true
+        photo_id:
+          type: string
+          example: d3e4f5a6-7b8c-9d0e-1f2a3b4c5d6e7
+    v3.StockItemState:
+      type: object
+      required:
+      - availability
+      - product_code
+      properties:
+        availability:
+          description: only possible values are `in_stock` or `out_of_stock`
+          type: string
+        product_code:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

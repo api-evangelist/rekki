@@ -70,7 +70,7 @@ tags_raw:
 - eCommerce
 apis:
 - aid: rekki:rekki-catalog-api
-  name: REKKI catalog API
+  name: REKKI Catalog API
   description: The catalog API from REKKI — 12 operation(s) for catalog.
   humanURL: https://api.rekki.com/swagger/index.html
   baseURL: https://api.rekki.com
@@ -86,7 +86,7 @@ apis:
   - type: APIReference
     url: https://api.rekki.com/swagger/index.html
 - aid: rekki:rekki-connect-customers-api
-  name: REKKI connect_customers API
+  name: REKKI Connect Customers API
   description: The connect_customers API from REKKI — 2 operation(s) for connect_customers.
   humanURL: https://api.rekki.com/swagger/index.html
   baseURL: https://api.rekki.com
@@ -101,7 +101,7 @@ apis:
   - type: APIReference
     url: https://api.rekki.com/swagger/index.html
 - aid: rekki:rekki-general-api
-  name: REKKI general API
+  name: REKKI General API
   description: The general API from REKKI — 2 operation(s) for general.
   humanURL: https://api.rekki.com/swagger/index.html
   baseURL: https://api.rekki.com
@@ -116,7 +116,7 @@ apis:
   - type: APIReference
     url: https://api.rekki.com/swagger/index.html
 - aid: rekki:rekki-order-guide-api
-  name: REKKI order-guide API
+  name: REKKI Order Guide API
   description: The order-guide API from REKKI — 1 operation(s) for order-guide.
   humanURL: https://api.rekki.com/swagger/index.html
   baseURL: https://api.rekki.com
@@ -130,7 +130,7 @@ apis:
   - type: APIReference
     url: https://api.rekki.com/swagger/index.html
 - aid: rekki:rekki-orders-api
-  name: REKKI orders API
+  name: REKKI Orders API
   description: The orders API from REKKI — 11 operation(s) for orders.
   humanURL: https://api.rekki.com/swagger/index.html
   baseURL: https://api.rekki.com

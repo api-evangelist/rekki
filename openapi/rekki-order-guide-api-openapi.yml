@@ -113,6 +113,47 @@ paths:
         required: true
 components:
   schemas:
+    v3.OrderGuideObject:
+      type: object
+      required:
+      - name
+      - reference
+      - units
+      properties:
+        reference:
+          description: product code for the item that maps to the supplier’s catalog.
+          type: string
+          x-order: '0'
+          example: BLBP
+        name:
+          description: item name as would be defined on the customer’s product list.
+          type: string
+          x-order: '1'
+          example: Blueberries
+        units:
+          description: a unit that the item can be ordered in.
+          type: string
+          x-order: '2'
+          example: Pint
+        price:
+          description: the order price in cents for the item per unit.
+          type: string
+          x-order: '3'
+          example: '299'
+        archived:
+          description: 'status of an item in the order-guide.
+
+            If False meaning the item is currently visible to the customer,
+
+            by setting it True the item can temporarily be made unavailable.'
+          type: boolean
+          x-order: '4'
+          example: false
+        deleted:
+          description: status of an item in the order-guide. If True means the item has been deleted from the order-guide
+          type: boolean
+          x-order: '5'
+          example: false
     v3.OrderGuideParameters:
       type: object
       required:
@@ -163,6 +204,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v3.OrderGuideParameters'
+    v3.GenericErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
     v3.OrderGuideResponse:
       type: object
       properties:
@@ -173,52 +219,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v3.OrderGuideObject'
-    v3.GenericErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    v3.OrderGuideObject:
-      type: object
-      required:
-      - name
-      - reference
-      - units
-      properties:
-        reference:
-          description: product code for the item that maps to the supplier’s catalog.
-          type: string
-          x-order: '0'
-          example: BLBP
-        name:
-          description: item name as would be defined on the customer’s product list.
-          type: string
-          x-order: '1'
-          example: Blueberries
-        units:
-          description: a unit that the item can be ordered in.
-          type: string
-          x-order: '2'
-          example: Pint
-        price:
-          description: the order price in cents for the item per unit.
-          type: string
-          x-order: '3'
-          example: '299'
-        archived:
-          description: 'status of an item in the order-guide.
-
-            If False meaning the item is currently visible to the customer,
-
-            by setting it True the item can temporarily be made unavailable.'
-          type: boolean
-          x-order: '4'
-          example: false
-        deleted:
-          description: status of an item in the order-guide. If True means the item has been deleted from the order-guide
-          type: boolean
-          x-order: '5'
-          example: false
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

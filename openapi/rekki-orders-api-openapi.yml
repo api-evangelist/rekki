@@ -885,66 +885,81 @@ paths:
         required: true
 components:
   schemas:
-    main.SetErrorOrderInput:
+    v3.SuccessConfirmation:
       type: object
       properties:
-        attempts:
-          description: Number of attempts made to push the integration
-          type: integer
-        error:
-          description: error message
-          type: string
-        order:
-          type: object
-          properties:
-            reference:
-              type: string
-        product_code:
-          type: string
-    v3.ConfirmOrdersInput:
+        success:
+          type: boolean
+          example: true
+    v3.SetIntegratedOrdersInput:
       type: object
       properties:
         orders:
-          description: Array of References of the orders to confirm, required. Order refs are discoverable when listing orders.
+          description: Array of References of the orders to mark as integrated, required. Order refs are discoverable when listing orders.
           type: array
           items:
             type: string
-    v3.OrderListInput:
+    v3.Order:
       type: object
       properties:
-        extra_item_fields:
-          description: 'Show extra item fields
-
-            * size - show item size'
+        confirmed_at:
+          description: the time at which the supplier confirmed the order (via email, or via the REKKI supplier app, or via the REKKI API)
+          type: string
+          example: '2019-08-12T12:20:10-07:00'
+        contact_email:
+          description: the email for the person who placed the order
+          type: string
+        contact_info:
+          description: the phone number or email address for the person who placed the order
+          type: string
+        contact_name:
+          description: the full name of the person who placed the order
+          type: string
+        customer_account_no:
+          description: the account number for customer within the supplier system, this can be setup in REKKI supplier app ( https://supplier.rekki.com ).
+          type: string
+        delivery_address:
+          description: delivery address for this specific order
+          $ref: '#/components/schemas/v3.DeliveryAddress'
+        delivery_instructions:
+          description: defined by the user at the moment of making an order (e.g. "opening hours 8am - 4pm.")
+          type: string
+        delivery_on:
+          description: expected delivery date (when users place orders they specify for which day it is supposed to be delivered)
+          type: string
+          example: '2020-06-01'
+        external_po_number:
+          description: External Purchase Order Number for orders placed via external systems (e.g. "PO123")
+          type: string
+        inserted_at:
+          description: when was the order created by the customer (ISO date time)
+          type: string
+        inserted_at_ts:
+          description: when was the order created by the customer (unix timestamp in seconds)
+          type: integer
+        items:
+          description: items requests in this order
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.OrderItem'
+        location_name:
+          description: the name of the location that placed the order, can be NULL
+          type: string
+        notes:
+          description: defined by the user at the moment of making an order and usually refer to that specific order (e.g. "please send fresher tomatoes")
+          type: string
+        reference:
+          description: REKKI's order reference
+          type: string
+        supplier_notes:
+          description: 'notes define by the user for the supplier, usually being common across orders (e.g.: "please use the side entrance for delivery")'
+          type: string
+        tags:
+          description: tags for this order
           type: array
           items:
             type: string
-            enum:
-            - size
-        show_previous_attempts:
-          description: Show previous integration attempts
-          type: boolean
-          default: false
-        since:
-          description: Filters orders created at or after the given timestamp
-          type: string
-          example: '2006-01-02T15:04:05-07:00'
-        skip_integrated:
-          description: Only fetch orders that were not marked as integrated
-          type: boolean
-          default: false
-    v3.DeliveryAddress:
-      type: object
-      properties:
-        address:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        postcode:
-          type: string
-    main.UpdateSuccess:
+    v3.UpdateSuccess:
       type: object
       properties:
         affected:
@@ -953,19 +968,24 @@ components:
         success:
           type: boolean
           example: true
-    v4.OrderResponseInfo:
+    main.GenericErrorResponse:
       type: object
       properties:
-        reference_id:
+        error:
           type: string
-          description: REKKI's order reference
-        external_id:
+    v3.FailedOrderError:
+      type: object
+      properties:
+        error:
           type: string
-          description: External order reference, if applicable
-        messages:
-          type: array
-          items:
-            type: string
+        order_id:
+          type: string
+    v4.ConnectData:
+      type: object
+      properties:
+        original_email_subject:
+          description: Original REKKI Connect email subject line. Can be null.
+          type: string
     integration.OrderItem:
       type: object
       properties:
@@ -995,6 +1015,259 @@ components:
         units:
           description: item unit as defined on the customer product list
           type: string
+    v3.DeliveryAddress:
+      type: object
+      properties:
+        address:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        postcode:
+          type: string
+    integration.Order:
+      type: object
+      properties:
+        confirmed_at:
+          description: the time at which the supplier confirmed the order (via email, or via the REKKI supplier app, or via the REKKI API)
+          type: string
+          example: '2019-08-12T12:20:10-07:00'
+        contact_email:
+          description: the email for the person who placed the order
+          type: string
+        contact_info:
+          description: the phone number or email address for the person who placed the order
+          type: string
+        contact_name:
+          description: the full name of the person who placed the order
+          type: string
+        customer_account_no:
+          description: the account number for customer within the supplier system, this can be setup in REKKI supplier app ( https://supplier.rekki.com ).
+          type: string
+        delivery_address:
+          description: delivery address for this specific order (address, postcode)
+          type: string
+        delivery_on:
+          description: expected delivery date (when users place orders they specify for which day it is supposed to be delivered)
+          type: string
+          example: '2020-06-01'
+        external_po_number:
+          description: External Purchase Order Number for orders placed via external systems (e.g. "PO123")
+          type: string
+        inserted_at:
+          description: when was the order created by the customer (ISO date time)
+          type: string
+        inserted_at_ts:
+          description: when was the order created by the customer (unix timestamp in seconds)
+          type: integer
+        items:
+          description: items requests in this order
+          type: array
+          items:
+            $ref: '#/components/schemas/integration.OrderItem'
+        location_name:
+          description: the name of the location that placed the order, can be NULL
+          type: string
+        notes:
+          description: defined by the user at the moment of making an order and usually refer to that specific order (e.g. "please send fresher tomatoes")
+          type: string
+        reference:
+          description: REKKI's order reference
+          type: string
+        supplier_notes:
+          description: 'notes define by the user for the supplier, usually being common across orders (e.g.: "please use the side entrance for delivery")'
+          type: string
+    main.UpdateSuccess:
+      type: object
+      properties:
+        affected:
+          description: number of items actually updated
+          type: integer
+        success:
+          type: boolean
+          example: true
+    v3.OrderListInput:
+      type: object
+      properties:
+        extra_item_fields:
+          description: 'Show extra item fields
+
+            * size - show item size'
+          type: array
+          items:
+            type: string
+            enum:
+            - size
+        show_previous_attempts:
+          description: Show previous integration attempts
+          type: boolean
+          default: false
+        since:
+          description: Filters orders created at or after the given timestamp
+          type: string
+          example: '2006-01-02T15:04:05-07:00'
+        skip_integrated:
+          description: Only fetch orders that were not marked as integrated
+          type: boolean
+          default: false
+    v4.OrderListInputFilter:
+      type: object
+      properties:
+        integration_statuses:
+          description: include only orders with these statuses in the list. If empty or the field is missing, the response will include all statuses.
+          type: array
+          items:
+            description: 'The integration status. Can be one of: pending, done, failed'
+            type: string
+          example:
+          - pending
+          - failed
+    v3.SetErrorOrderInput:
+      type: object
+      properties:
+        orders:
+          description: list of orders failed to integrate, required
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.OrderIntegrationError'
+    v4.OrderResponseInfo:
+      type: object
+      properties:
+        reference_id:
+          type: string
+          description: REKKI's order reference
+        external_id:
+          type: string
+          description: External order reference, if applicable
+        messages:
+          type: array
+          items:
+            type: string
+    main.OrderListInput:
+      type: object
+      properties:
+        since:
+          description: Filters orders created at or after the given unix timestamp (in seconds)
+          type: integer
+          example: 1565610869
+    main.SetIntegrateOrdersInput:
+      type: object
+      properties:
+        orders:
+          description: Array of References of the orders to confirm, required. Order refs are discoverable when listing orders.
+          type: array
+          items:
+            type: any
+    v3.OrderItem:
+      type: object
+      properties:
+        id:
+          description: REKKI's item id, for REKKI internal reference
+          type: string
+        name:
+          description: item name as defined on the customer product list
+          type: string
+        price:
+          description: the item price as set in REKKI
+          type: string
+        price_cents:
+          description: the item price as set in REKKI, in cents
+          type: integer
+        product_code:
+          description: 'product code that maps to the supplier catalog, suppliers can modify
+
+            the product code for the future orders for this customer at https://supplier.rekki.com'
+          type: string
+        quantity:
+          description: quantity
+          type: number
+        size:
+          description: size of the item. OPTIONAL FIELD. Will only be returned if requested. See v3.OrderListInput.ExtraItemFields
+          type: string
+        spec:
+          description: details/notes provided by the supplier for the item
+          type: string
+        units:
+          description: item unit as defined on the customer product list
+          type: string
+    v3.OrderIntegrationError:
+      type: object
+      properties:
+        attempts:
+          description: Number of attempts made to push the integration
+          type: integer
+        error:
+          description: error message
+          type: string
+        product_code:
+          description: product code
+          type: string
+        reference:
+          description: Order reference
+          type: string
+    v4.IntegrationData:
+      type: object
+      properties:
+        integrated_at:
+          description: The time when the order was integrated successfully, or null if it was not integrated yet.
+          type: string
+        status:
+          description: 'The integration status. Can be one of: pending, done, failed'
+          type: string
+    main.OrderListOutput:
+      type: object
+      properties:
+        orders:
+          description: list of not integrated orders
+          type: array
+          items:
+            $ref: '#/components/schemas/integration.Order'
+    v4.GenericErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    v3.OrderListOutput:
+      type: object
+      properties:
+        orders:
+          description: list of not integrated orders
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.Order'
+    v3.GenericErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    v4.DeliveryAddress:
+      type: object
+      properties:
+        address:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        postcode:
+          type: string
+    v4.SetIntegratedOrdersInput:
+      type: object
+      properties:
+        orders:
+          description: Array of References of the orders to mark as integrated, required. Order refs are discoverable when listing orders.
+          type: array
+          items:
+            type: object
+            properties:
+              reference_id:
+                type: string
+              external_id:
+                type: string
+            required:
+            - reference_id
+            - external_id
     v4.Order:
       type: object
       properties:
@@ -1073,71 +1346,6 @@ components:
         updated_at_ts:
           description: when was the order last updated (unix timestamp in seconds)
           type: integer
-    v4.ConnectData:
-      type: object
-      properties:
-        original_email_subject:
-          description: Original REKKI Connect email subject line. Can be null.
-          type: string
-    v4.IntegrationData:
-      type: object
-      properties:
-        integrated_at:
-          description: The time when the order was integrated successfully, or null if it was not integrated yet.
-          type: string
-        status:
-          description: 'The integration status. Can be one of: pending, done, failed'
-          type: string
-    v3.SetErrorOrderInput:
-      type: object
-      properties:
-        orders:
-          description: list of orders failed to integrate, required
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.OrderIntegrationError'
-    v3.GenericErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    v4.OrderListInput:
-      type: object
-      properties:
-        enable_oob:
-          description: Enable OOB processing for the orders. Optional.
-          type: boolean
-        filter:
-          description: Show only orders matching the filters. Optional.
-          $ref: '#/components/schemas/v4.OrderListInputFilter'
-        since:
-          description: Show only orders created at or after the given timestamp. Required.
-          type: string
-          example: '2006-01-02T15:04:05-07:00'
-    v4.OrderListOutput:
-      type: object
-      properties:
-        orders:
-          description: list of not integrated orders
-          type: array
-          items:
-            $ref: '#/components/schemas/v4.Order'
-    v4.SetIntegratedOrdersInput:
-      type: object
-      properties:
-        orders:
-          description: Array of References of the orders to mark as integrated, required. Order refs are discoverable when listing orders.
-          type: array
-          items:
-            type: object
-            properties:
-              reference_id:
-                type: string
-              external_id:
-                type: string
-            required:
-            - reference_id
-            - external_id
     v4.IntegratedOrdersResponse:
       type: object
       properties:
@@ -1162,6 +1370,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v4.OrderResponseInfo'
+    main.SetErrorOrderInput:
+      type: object
+      properties:
+        attempts:
+          description: Number of attempts made to push the integration
+          type: integer
+        error:
+          description: error message
+          type: string
+        order:
+          type: object
+          properties:
+            reference:
+              type: string
+        product_code:
+          type: string
+    v4.OrderListInput:
+      type: object
+      properties:
+        enable_oob:
+          description: Enable OOB processing for the orders. Optional.
+          type: boolean
+        filter:
+          description: Show only orders matching the filters. Optional.
+          $ref: '#/components/schemas/v4.OrderListInputFilter'
+        since:
+          description: Show only orders created at or after the given timestamp. Required.
+          type: string
+          example: '2006-01-02T15:04:05-07:00'
+    v4.OrderListOutput:
+      type: object
+      properties:
+        orders:
+          description: list of not integrated orders
+          type: array
+          items:
+            $ref: '#/components/schemas/v4.Order'
     v4.OrderItem:
       type: object
       properties:
@@ -1194,169 +1439,12 @@ components:
         units:
           description: item unit as defined on the customer product list
           type: string
-    v3.UpdateSuccess:
+    main.SuccessConfirmation:
       type: object
       properties:
-        affected:
-          description: number of items actually updated
-          type: integer
         success:
           type: boolean
           example: true
-    v3.OrderItem:
-      type: object
-      properties:
-        id:
-          description: REKKI's item id, for REKKI internal reference
-          type: string
-        name:
-          description: item name as defined on the customer product list
-          type: string
-        price:
-          description: the item price as set in REKKI
-          type: string
-        price_cents:
-          description: the item price as set in REKKI, in cents
-          type: integer
-        product_code:
-          description: 'product code that maps to the supplier catalog, suppliers can modify
-
-            the product code for the future orders for this customer at https://supplier.rekki.com'
-          type: string
-        quantity:
-          description: quantity
-          type: number
-        size:
-          description: size of the item. OPTIONAL FIELD. Will only be returned if requested. See v3.OrderListInput.ExtraItemFields
-          type: string
-        spec:
-          description: details/notes provided by the supplier for the item
-          type: string
-        units:
-          description: item unit as defined on the customer product list
-          type: string
-    v3.Order:
-      type: object
-      properties:
-        confirmed_at:
-          description: the time at which the supplier confirmed the order (via email, or via the REKKI supplier app, or via the REKKI API)
-          type: string
-          example: '2019-08-12T12:20:10-07:00'
-        contact_email:
-          description: the email for the person who placed the order
-          type: string
-        contact_info:
-          description: the phone number or email address for the person who placed the order
-          type: string
-        contact_name:
-          description: the full name of the person who placed the order
-          type: string
-        customer_account_no:
-          description: the account number for customer within the supplier system, this can be setup in REKKI supplier app ( https://supplier.rekki.com ).
-          type: string
-        delivery_address:
-          description: delivery address for this specific order
-          $ref: '#/components/schemas/v3.DeliveryAddress'
-        delivery_instructions:
-          description: defined by the user at the moment of making an order (e.g. "opening hours 8am - 4pm.")
-          type: string
-        delivery_on:
-          description: expected delivery date (when users place orders they specify for which day it is supposed to be delivered)
-          type: string
-          example: '2020-06-01'
-        external_po_number:
-          description: External Purchase Order Number for orders placed via external systems (e.g. "PO123")
-          type: string
-        inserted_at:
-          description: when was the order created by the customer (ISO date time)
-          type: string
-        inserted_at_ts:
-          description: when was the order created by the customer (unix timestamp in seconds)
-          type: integer
-        items:
-          description: items requests in this order
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.OrderItem'
-        location_name:
-          description: the name of the location that placed the order, can be NULL
-          type: string
-        notes:
-          description: defined by the user at the moment of making an order and usually refer to that specific order (e.g. "please send fresher tomatoes")
-          type: string
-        reference:
-          description: REKKI's order reference
-          type: string
-        supplier_notes:
-          description: 'notes define by the user for the supplier, usually being common across orders (e.g.: "please use the side entrance for delivery")'
-          type: string
-        tags:
-          description: tags for this order
-          type: array
-          items:
-            type: string
-    main.OrderListInput:
-      type: object
-      properties:
-        since:
-          description: Filters orders created at or after the given unix timestamp (in seconds)
-          type: integer
-          example: 1565610869
-    main.SetIntegrateOrdersInput:
-      type: object
-      properties:
-        orders:
-          description: Array of References of the orders to confirm, required. Order refs are discoverable when listing orders.
-          type: array
-          items:
-            type: any
-    v3.SetIntegratedOrdersInput:
-      type: object
-      properties:
-        orders:
-          description: Array of References of the orders to mark as integrated, required. Order refs are discoverable when listing orders.
-          type: array
-          items:
-            type: string
-    v3.OrderListOutput:
-      type: object
-      properties:
-        orders:
-          description: list of not integrated orders
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.Order'
-    v4.DeliveryAddress:
-      type: object
-      properties:
-        address:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        postcode:
-          type: string
-    main.GenericErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    v3.OrderIntegrationError:
-      type: object
-      properties:
-        attempts:
-          description: Number of attempts made to push the integration
-          type: integer
-        error:
-          description: error message
-          type: string
-        product_code:
-          description: product code
-          type: string
-        reference:
-          description: Order reference
-          type: string
     main.FailedOrderError:
       type: object
       properties:
@@ -1364,102 +1452,14 @@ components:
           type: string
         order_id:
           type: any
-    v4.OrderListInputFilter:
-      type: object
-      properties:
-        integration_statuses:
-          description: include only orders with these statuses in the list. If empty or the field is missing, the response will include all statuses.
-          type: array
-          items:
-            description: 'The integration status. Can be one of: pending, done, failed'
-            type: string
-          example:
-          - pending
-          - failed
-    v3.FailedOrderError:
-      type: object
-      properties:
-        error:
-          type: string
-        order_id:
-          type: string
-    integration.Order:
-      type: object
-      properties:
-        confirmed_at:
-          description: the time at which the supplier confirmed the order (via email, or via the REKKI supplier app, or via the REKKI API)
-          type: string
-          example: '2019-08-12T12:20:10-07:00'
-        contact_email:
-          description: the email for the person who placed the order
-          type: string
-        contact_info:
-          description: the phone number or email address for the person who placed the order
-          type: string
-        contact_name:
-          description: the full name of the person who placed the order
-          type: string
-        customer_account_no:
-          description: the account number for customer within the supplier system, this can be setup in REKKI supplier app ( https://supplier.rekki.com ).
-          type: string
-        delivery_address:
-          description: delivery address for this specific order (address, postcode)
-          type: string
-        delivery_on:
-          description: expected delivery date (when users place orders they specify for which day it is supposed to be delivered)
-          type: string
-          example: '2020-06-01'
-        external_po_number:
-          description: External Purchase Order Number for orders placed via external systems (e.g. "PO123")
-          type: string
-        inserted_at:
-          description: when was the order created by the customer (ISO date time)
-          type: string
-        inserted_at_ts:
-          description: when was the order created by the customer (unix timestamp in seconds)
-          type: integer
-        items:
-          description: items requests in this order
-          type: array
-          items:
-            $ref: '#/components/schemas/integration.OrderItem'
-        location_name:
-          description: the name of the location that placed the order, can be NULL
-          type: string
-        notes:
-          description: defined by the user at the moment of making an order and usually refer to that specific order (e.g. "please send fresher tomatoes")
-          type: string
-        reference:
-          description: REKKI's order reference
-          type: string
-        supplier_notes:
-          description: 'notes define by the user for the supplier, usually being common across orders (e.g.: "please use the side entrance for delivery")'
-          type: string
-    v4.GenericErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    main.OrderListOutput:
+    v3.ConfirmOrdersInput:
       type: object
       properties:
         orders:
-          description: list of not integrated orders
+          description: Array of References of the orders to confirm, required. Order refs are discoverable when listing orders.
           type: array
           items:
-            $ref: '#/components/schemas/integration.Order'
-    main.SuccessConfirmation:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-    v3.SuccessConfirmation:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
