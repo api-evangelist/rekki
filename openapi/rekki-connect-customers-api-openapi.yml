@@ -174,6 +174,20 @@ paths:
         required: true
 components:
   schemas:
+    v3.CreateConnectCustomersInput:
+      type: object
+      required:
+      - customers
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.ConnectCustomerInput'
+    v3.GenericErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
     v3.CreateConnectCustomersAndOrderGuideInput:
       type: object
       required:
@@ -184,15 +198,47 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/v3.ConnectCustomerAndOrderGuideInput'
-    v3.CreateConnectCustomersInput:
+    v3.CreateConnectCustomersOutput:
+      type: object
+      properties:
+        error:
+          type: string
+        num_customers_created:
+          type: integer
+        status:
+          type: string
+    v3.ConnectCustomerContactInput:
       type: object
       required:
-      - customers
+      - name
       properties:
-        customers:
+        email:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+    v3.ConnectCustomerInput:
+      type: object
+      required:
+      - account_number
+      - delivery_address
+      - name
+      properties:
+        account_number:
+          type: string
+        contacts:
           type: array
           items:
-            $ref: '#/components/schemas/v3.ConnectCustomerInput'
+            $ref: '#/components/schemas/v3.ConnectCustomerContactInput'
+        delivery_address:
+          type: string
+        delivery_instructions:
+          type: string
+        name:
+          type: string
+        order_confirmation_email:
+          type: string
     v3.ConnectCustomerAndOrderGuideInput:
       type: object
       required:
@@ -218,43 +264,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v3.ConnectCustomerItem'
-    v3.ConnectCustomerInput:
-      type: object
-      required:
-      - account_number
-      - delivery_address
-      - name
-      properties:
-        account_number:
-          type: string
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.ConnectCustomerContactInput'
-        delivery_address:
-          type: string
-        delivery_instructions:
-          type: string
-        name:
-          type: string
-        order_confirmation_email:
-          type: string
-    v3.ConnectCustomerContactInput:
-      type: object
-      required:
-      - name
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-        phone:
-          type: string
-    v3.GenericErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
     v3.ConnectCustomerItem:
       type: object
       properties:
@@ -268,15 +277,6 @@ components:
         unit:
           type: string
         spec:
-          type: string
-    v3.CreateConnectCustomersOutput:
-      type: object
-      properties:
-        error:
-          type: string
-        num_customers_created:
-          type: integer
-        status:
           type: string
   securitySchemes:
     ApiKeyAuth:
