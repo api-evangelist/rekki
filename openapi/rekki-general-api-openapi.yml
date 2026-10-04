@@ -80,7 +80,7 @@ paths:
         required: true
 components:
   schemas:
-    main.LogMessage:
+    v3.LogMessage:
       type: object
       properties:
         level:
@@ -88,7 +88,7 @@ components:
           type: string
         message:
           type: string
-    v3.LogMessage:
+    main.LogMessage:
       type: object
       properties:
         level:

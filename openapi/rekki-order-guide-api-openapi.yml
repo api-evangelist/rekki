@@ -159,6 +159,20 @@ components:
           type: boolean
           x-order: '5'
           example: false
+    v3.OrderGuideRequest:
+      type: object
+      required:
+      - customer_account_number
+      - products
+      properties:
+        customer_account_number:
+          description: the customer the order-guide belongs to
+          type: string
+          example: REKK1
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.OrderGuideParameters'
     v3.OrderGuideResponse:
       type: object
       properties:
@@ -205,20 +219,6 @@ components:
           type: boolean
           x-order: '4'
           example: false
-    v3.OrderGuideRequest:
-      type: object
-      required:
-      - customer_account_number
-      - products
-      properties:
-        customer_account_number:
-          description: the customer the order-guide belongs to
-          type: string
-          example: REKK1
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.OrderGuideParameters'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
