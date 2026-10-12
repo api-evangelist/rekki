@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/rekki/integrations
+- https://n8n.io/integrations/rekki/
+- https://composio.dev/toolkits/rekki
+- https://monid.ai/tools/rekki
+checked:
+- https://composio.dev/toolkits/rekki
+- https://monid.ai/tools/rekki
+- https://n8n.io/integrations/rekki/
+- https://zapier.com/apps/rekki/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
