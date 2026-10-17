@@ -113,11 +113,20 @@ paths:
         required: true
 components:
   schemas:
-    v3.GenericErrorResponse:
+    v3.OrderGuideRequest:
       type: object
+      required:
+      - customer_account_number
+      - products
       properties:
-        error:
+        customer_account_number:
+          description: the customer the order-guide belongs to
           type: string
+          example: REKK1
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.OrderGuideParameters'
     v3.OrderGuideObject:
       type: object
       required:
@@ -159,30 +168,11 @@ components:
           type: boolean
           x-order: '5'
           example: false
-    v3.OrderGuideRequest:
-      type: object
-      required:
-      - customer_account_number
-      - products
-      properties:
-        customer_account_number:
-          description: the customer the order-guide belongs to
-          type: string
-          example: REKK1
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.OrderGuideParameters'
-    v3.OrderGuideResponse:
+    v3.GenericErrorResponse:
       type: object
       properties:
-        customer_account_number:
+        error:
           type: string
-          example: REKK1
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/v3.OrderGuideObject'
     v3.OrderGuideParameters:
       type: object
       required:
@@ -219,6 +209,16 @@ components:
           type: boolean
           x-order: '4'
           example: false
+    v3.OrderGuideResponse:
+      type: object
+      properties:
+        customer_account_number:
+          type: string
+          example: REKK1
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/v3.OrderGuideObject'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
