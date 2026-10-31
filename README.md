@@ -64,6 +64,123 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-REKKI is a company surfaced as a portfolio company of creandum, point-nine and added to the API Evangelist network as a stub for enrichment. Sector: other. This profile is a lead awaiting the enrichment pipeline.
+REKKI is a food wholesale ordering platform that connects restaurants and chefs (buyers) with their suppliers. Restaurants place orders through the REKKI app, and suppliers receive, confirm, and fulfil them. REKKI publishes a public Supplier API that lets suppliers programmatically manage their product catalog (items, inventory, price lists), receive and confirm orders, report integration status back to REKKI, and manage REKKI Connect customers and their order guides. Authentication uses a supplier bearer token plus an X-REKKI-Authorization-Type header. REKKI's current product suite also includes AI agents for wholesale distributors (OrderAI, InboxAI, MenuAI) and a Marketplace. REKKI was surfaced as a portfolio company of Creandum and Point Nine.
 
-Backed by: creandum, point-nine — https://rekki.com/
+**Areas:** Company · Food · Wholesale · Ordering · Restaurant · Supply Chain · Catalog · Order · E-Commerce
+
+## REKKI on APIs.io
+
+Everything profiled for REKKI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/rekki/](https://apis.io/providers/rekki/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- [REKKI Catalog API](https://apis.io/apis/rekki/rekki-catalog-api/) — The catalog API from REKKI — 12 operation(s) for catalog.
+- [REKKI Connect Customers API](https://apis.io/apis/rekki/rekki-connect-customers-api/) — The connect_customers API from REKKI — 2 operation(s) for connect_customers.
+- [REKKI General API](https://apis.io/apis/rekki/rekki-general-api/) — The general API from REKKI — 2 operation(s) for general.
+- [REKKI Order Guide API](https://apis.io/apis/rekki/rekki-order-guide-api/) — The order-guide API from REKKI — 1 operation(s) for order-guide.
+- [REKKI Orders API](https://apis.io/apis/rekki/rekki-orders-api/) — The orders API from REKKI — 11 operation(s) for orders.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [rekki-supplier-api](https://apis.io/servers/rekki/rekki-supplier-api/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Rekki Agentic Access](https://apis.io/agentic-access/rekki/rekki-agentic-access/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Rekki.com Supplier catalog API](https://apis.io/collections/rekki/open-rekki-catalog-api/)
+- [Rekki.com Supplier catalog connect_customers API](https://apis.io/collections/rekki/open-rekki-connect-customers-api/)
+- [Rekki.com Supplier catalog general API](https://apis.io/collections/rekki/open-rekki-general-api/)
+- [Rekki.com Supplier catalog order-guide API](https://apis.io/collections/rekki/open-rekki-order-guide-api/)
+- [Rekki.com Supplier catalog orders API](https://apis.io/collections/rekki/open-rekki-orders-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Rekki Supplier Api Overlay](https://apis.io/overlays/rekki/rekki-supplier-api-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Rekki Authentication](https://apis.io/security/rekki/rekki-authentication/)
+- [Rekki Domain Security](https://apis.io/security/rekki/rekki-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://rekki.com/)
+- [Documentation](https://github.com/rekki/supplier-api)
+- [Getting started](https://rekki.com/suppliers)
+- [API reference](https://api.rekki.com/swagger/index.html)
+- [Support](https://rekki.com/faq)
+- [Terms of service](https://rekki.com/terms-and-conditions)
+- [Privacy policy](https://tandc.rekki.com/)
+- [GitHub](https://github.com/rekki)
+
+## API Evangelist rating
+
+**Kin Score 38.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 44.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 54.2 |
+| Access clarity | 21.1 |
+
+**Agent readiness 23.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/rekki/](https://apis.io/providers/rekki/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for REKKI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/rekki/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
